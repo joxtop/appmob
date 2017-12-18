@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { App, NavController, NavParams } from 'ionic-angular';
+
+import { AuthProvider } from '../../providers/auth/auth';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the CreateIssuePage page.
@@ -14,11 +17,17 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class CreateIssuePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private app: App, private auth: AuthProvider, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateIssuePage');
+  }
+
+  logOut() {
+    this.auth.logOut().subscribe(() => {
+      this.app.getRootNavs()[0].setRoot(LoginPage);
+    });
   }
 
 }

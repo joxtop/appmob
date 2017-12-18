@@ -20,7 +20,7 @@ export class HomePage {
    */
   tabs: any[];
 
-  constructor(public navCtrl: NavController) {
+  constructor(private navCtrl: NavController) {
     this.tabs = [
       { title: 'New Issue', icon: 'add', component: CreateIssuePage },
       { title: 'Issue Map', icon: 'map', component: IssueMapPage },
