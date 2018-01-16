@@ -2,63 +2,54 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Storage } from '@ionic/storage';
-import { Observable, ReplaySubject } from 'rxjs/Rx';
 
+import { config } from '../../app/config';
 import { AuthRequest } from '../../models/auth-request';
 import { AuthResponse } from '../../models/auth-response';
 import { User } from '../../models/user';
 
-/*
-  Generated class for the AuthProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+/**
+ * Authentication service for login/logout.
+ */
 @Injectable()
 export class AuthProvider {
 
-  private currentAuthSubject: ReplaySubject<AuthResponse>;
+  private auth: AuthResponse;
+  private initializationPromise: Promise<void>;
 
   constructor(private http: HttpClient, private storage: Storage) {
-
-    this.currentAuthSubject = new ReplaySubject(1);
-
-    this.storage.get('auth').then(auth => {
-      this.currentAuthSubject.next(auth);
+    this.initializationPromise = this.storage.get('auth').then(auth => {
+      this.auth = auth;
     });
   }
 
-  isAuthenticated(): Observable<boolean> {
-    return this.currentAuthSubject.first().map(auth => !!auth);
+  waitForInitialization(): Promise<void> {
+    return this.initializationPromise;
   }
 
-  getUser(): Observable<User> {
-    return this.currentAuthSubject.map(auth => auth ? auth.user : undefined);
+  isAuthenticated(): boolean {
+    return !!this.auth;
   }
 
-  getToken(): Observable<string> {
-    return this.currentAuthSubject.map(auth => auth ? auth.token : undefined);
+  getUser(): User {
+    return this.auth ? this.auth.user : null;
   }
 
-  logIn(authRequest: AuthRequest): Observable<User> {
-    return this.http.post<AuthResponse>('https://comem-citizen-engagement.herokuapp.com/api/auth', authRequest).switchMap(authResponse => {
-      this.currentAuthSubject.next(authResponse);
-      return this.save(authResponse).map(() => authResponse.user);
-    });
+  getToken(): string {
+    return this.auth ? this.auth.token : null;
   }
 
-  logOut(): Observable<void> {
-
-    const promise = this.storage.remove('auth').then(() => {
-      this.currentAuthSubject.next(undefined);
-      console.log('User logged out');
-    });
-
-    return Observable.fromPromise(promise);
+  async logIn(authRequest: AuthRequest): Promise<User> {
+    this.auth = await this.http.post<AuthResponse>(`${config.apiUrl}/auth`, authRequest).toPromise();
+    console.log(`User ${this.auth.user.name} logged in`);
+    await this.storage.set('auth', this.auth);
+    return this.auth.user;
   }
 
-  private save(auth: AuthResponse): Observable<void> {
-    return Observable.fromPromise(this.storage.set('auth', auth));
+  async logOut(): Promise<void> {
+    await this.storage.remove('auth');
+    this.auth = null;
+    console.log('User logged out');
   }
 
 }

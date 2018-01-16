@@ -12,20 +12,15 @@ import { LoginPage } from '../login/login';
  */
 
 @Component({
-  selector: 'page-create-issue',
-  templateUrl: 'create-issue.html',
+  templateUrl: 'create-issue.html'
 })
 export class CreateIssuePage {
 
   constructor(private app: App, private auth: AuthProvider, public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateIssuePage');
-  }
-
   logOut() {
-    this.auth.logOut().subscribe(() => {
+    this.auth.logOut().then(() => {
       this.app.getRootNavs()[0].setRoot(LoginPage);
     });
   }

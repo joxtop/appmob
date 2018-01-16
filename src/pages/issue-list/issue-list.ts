@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
@@ -14,11 +15,13 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class IssueListPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public http: HttpClient, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad IssueListPage');
+    this.http.get('https://comem-citizen-engagement.herokuapp.com/api/issues').subscribe(issues => {
+      console.log(`Issues loaded`);
+    });
   }
 
 }

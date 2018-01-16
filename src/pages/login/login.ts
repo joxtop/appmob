@@ -14,15 +14,14 @@ import { HomePage } from '../home/home';
  */
 
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
+  templateUrl: 'login.html'
 })
 export class LoginPage {
 
   authRequest: AuthRequest;
+  loginError: boolean;
   @ViewChild(NgForm)
   form: NgForm;
-  loginError: boolean;
 
   constructor(private auth: AuthProvider, private navCtrl: NavController) {
     this.authRequest = new AuthRequest();
@@ -41,12 +40,11 @@ export class LoginPage {
 
     this.loginError = false;
 
-    this.auth.logIn(this.authRequest).subscribe(user => {
-      console.log(`User ${user.name} successfully authenticated`);
+    this.auth.logIn(this.authRequest).then(user => {
       this.navCtrl.setRoot(HomePage);
     }, err => {
       this.loginError = true;
-      console.log(`Authentication failed: ${err.message}`);
+      console.warn(`Authentication failed: ${err.message}`);
     });
   }
 

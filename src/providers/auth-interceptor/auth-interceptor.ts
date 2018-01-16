@@ -22,18 +22,17 @@ export class AuthInterceptorProvider implements HttpInterceptor {
     const auth = this.injector.get(AuthProvider);
 
     // Get the bearer token (if any).
-    return auth.getToken().first().switchMap(token => {
+    const token = auth.getToken();
 
-      // Add it to the request if it doesn't already have an Authorization header.
-      if (token && !req.headers.has('Authorization')) {
-        req = req.clone({
-          headers: req.headers.set('Authorization', `Bearer ${token}`)
-        });
-      }
+    // Add it to the request if it doesn't already have an Authorization header.
+    if (token && !req.headers.has('Authorization')) {
+      req = req.clone({
+        headers: req.headers.set('Authorization', `Bearer ${token}`)
+      });
+    }
 
-      // Perform the request.
-      return next.handle(req);
-    });
+    // Perform the request.
+    return next.handle(req);
   }
 
 }

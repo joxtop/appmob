@@ -7,9 +7,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CreateIssuePage } from '../pages/create-issue/create-issue';

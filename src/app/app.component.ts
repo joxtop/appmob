@@ -15,8 +15,8 @@ export class MyApp {
 
   constructor(private auth: AuthProvider, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
 
-    this.auth.isAuthenticated().subscribe(authenticated => {
-      if (authenticated) {
+    this.auth.waitForInitialization().then(() => {
+      if (this.auth.isAuthenticated()) {
         this.rootPage = HomePage;
       } else {
         this.rootPage = LoginPage;
