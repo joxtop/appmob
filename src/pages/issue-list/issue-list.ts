@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { config } from '../../app/config';
+
 /**
  * Generated class for the IssueListPage page.
  *
@@ -10,8 +12,7 @@ import { NavController, NavParams } from 'ionic-angular';
  */
 
 @Component({
-  selector: 'page-issue-list',
-  templateUrl: 'issue-list.html',
+  templateUrl: 'issue-list.html'
 })
 export class IssueListPage {
 
@@ -19,7 +20,7 @@ export class IssueListPage {
   }
 
   ionViewDidLoad() {
-    this.http.get('https://comem-citizen-engagement.herokuapp.com/api/issues').subscribe(issues => {
+    this.http.get(`${config.apiUrl}/issues`).subscribe(issues => {
       console.log(`Issues loaded`);
     });
   }
