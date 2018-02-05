@@ -1,6 +1,6 @@
 {
   "name": "citizen-engagement",
-  "app_id": "",
+  "app_id": "2c19522c",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
