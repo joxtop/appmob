@@ -1,25 +1,37 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { AuthRequest } from '../../models/auth-request';
 import { AuthProvider } from '../../providers/auth/auth';
 import { HomePage } from '../home/home';
 
 /**
- * Generated class for the LoginPage page.
+ * Login page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
 @Component({
   templateUrl: 'login.html'
 })
 export class LoginPage {
 
+  /**
+   * This authentication request object will be updated when the user
+   * edits the login form. It will then be sent to the API.
+   */
   authRequest: AuthRequest;
+
+  /**
+   * If true, it means that the authentication API has return a failed response
+   * (probably because the name or password is incorrect).
+   */
   loginError: boolean;
+
+  /**
+   * The login form.
+   */
   @ViewChild(NgForm)
   form: NgForm;
 
@@ -27,25 +39,26 @@ export class LoginPage {
     this.authRequest = new AuthRequest();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
-
+  /**
+   * Called when the login form is submitted.
+   */
   onSubmit($event) {
+
+    // Prevent default HTML form behavior.
     $event.preventDefault();
 
+    // Do not do anything if the form is invalid.
     if (this.form.invalid) {
       return;
     }
 
+    // Hide any previous login error.
     this.loginError = false;
 
-    this.auth.logIn(this.authRequest).then(user => {
-      this.navCtrl.setRoot(HomePage);
-    }, err => {
+    // Perform the authentication request to the API.
+    this.auth.logIn(this.authRequest).subscribe(undefined, err => {
       this.loginError = true;
       console.warn(`Authentication failed: ${err.message}`);
     });
   }
-
 }

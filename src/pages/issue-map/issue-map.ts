@@ -9,7 +9,8 @@ import { NavController, NavParams } from 'ionic-angular';
  */
 
 @Component({
-  templateUrl: 'issue-map.html'
+  selector: 'page-issue-map',
+  templateUrl: 'issue-map.html',
 })
 export class IssueMapPage {
 

@@ -1,8 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-
-import { config } from '../../app/config';
 
 /**
  * Generated class for the IssueListPage page.
@@ -12,17 +9,16 @@ import { config } from '../../app/config';
  */
 
 @Component({
-  templateUrl: 'issue-list.html'
+  selector: 'page-issue-list',
+  templateUrl: 'issue-list.html',
 })
 export class IssueListPage {
 
-  constructor(public http: HttpClient, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    this.http.get(`${config.apiUrl}/issues`).subscribe(issues => {
-      console.log(`Issues loaded`);
-    });
+    console.log('ionViewDidLoad IssueListPage');
   }
 
 }
