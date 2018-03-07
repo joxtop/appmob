@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { AuthProvider } from '../../providers/auth/auth';
 import { LoginPage } from '../login/login';
@@ -19,11 +21,15 @@ import { config } from '../../app/config';
 })
 export class CreateIssuePage {
 
+  pictureData: string;
+
   constructor(
     private auth: AuthProvider,
     private httpClient: HttpClient,
     public navCtrl: NavController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    private geolocation: Geolocation,
+    private camera: Camera
   ) {
   }
 
@@ -33,6 +39,28 @@ export class CreateIssuePage {
     const url = `${config.apiUrl}/issueTypes`;
     this.httpClient.get(url).subscribe(issueTypes => {
       console.log('Issue types loaded', issueTypes);
+    });
+
+    const geolocationPromise = this.geolocation.getCurrentPosition();
+    geolocationPromise.then(position => {
+      const coords = position.coords;
+      console.log(`User is at ${coords.longitude}, ${coords.latitude}`);
+    }).catch(err => {
+      console.warn(`Could not retrieve user position because: ${err.message}`);
+    });
+  }
+
+  takePicture() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    };
+    this.camera.getPicture(options).then(pictureData => {
+      this.pictureData = pictureData;
+    }).catch(err => {
+      console.warn(`Could not take picture because: ${err.message}`);
     });
   }
 

@@ -13,6 +13,16 @@
 </ion-header>
 
 
-<ion-content padding>
-  Let's list the issues.
+<ion-content>
+  <ion-searchbar showCancelButton (ionInput)="onInput($event)" (ionCancel)="onCancel($event)"></ion-searchbar>
+  <ion-list *ngIf='issues'>
+    <ion-item *ngFor='let issue of issues'>
+      <ion-thumbnail item-start>
+        <img src="{{issue.imageUrl}}">
+      </ion-thumbnail>
+      <h2>{{issue.description}}</h2>
+      <p>Status: {{issue.state}}</p>
+      <button ion-button clear item-end (click)='goToDetails(issue.id)'>View</button>
+    </ion-item>
+  </ion-list>
 </ion-content>
