@@ -4,6 +4,8 @@ import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/nativ
 
 import { Issue } from '../../models/issue';
 import { IssueProvider } from '../../providers/issue/issue';
+import { UserProvider } from '../../providers/user/user';
+import { User } from '../../models/user';
 
 /**
  * Generated class for the DetailsPage page.
@@ -20,24 +22,36 @@ export class DetailsPage {
 
   issue: Issue;
   issueAddress: string;
+  createdBy: User;
+  state: {
+    name: string, 
+    icon: string
+  }
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
     private issueService: IssueProvider,
+    private userService: UserProvider,
     private nativeGeocoder: NativeGeocoder
   ) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DetailsPage');
     this.loadIssueDetails(this.navParams.data.id);
   }
 
   private loadIssueDetails(id: string) {
     this.issueService.getIssueById(id).subscribe(issue => {
-      console.log(issue);
       this.issue = issue;
       this.loadIssueAddress(issue);
+      this.loadUserDetails(issue.creatorHref.substring(issue.creatorHref.length-24, issue.creatorHref.length));
+      this.loadIssueState(issue);
+    });
+  }
+
+  private loadUserDetails(id: string) {
+    this.userService.getUserById(id).subscribe(user => {
+      this.createdBy = user;
     });
   }
 
@@ -47,6 +61,43 @@ export class DetailsPage {
         this.issueAddress = `${result[0].thoroughfare} ${result[0].subThoroughfare}, ${result[0].postalCode} ${result[0].locality}`;
       })
       .catch((error: any) => console.log(error));
+  }
+
+  loadIssueState(issue: Issue) {
+    console.log('loadIssueState');
+    switch (issue.state) {
+      case 'new':
+        this.state = {
+          name: 'Nouveau',
+          icon: 'star'
+        };
+        break;
+      case 'inProgress':
+        this.state = {
+          name: 'En cours',
+          icon: 'build'
+        };
+        break;
+      case 'rejected':
+        this.state = {
+          name: 'Rejeté',
+          icon: 'trash'
+        };
+        break;
+      case 'canceled':
+        this.state = {
+          name: 'Supprimé',
+          icon: 'close-circle'
+        };
+        break;
+      case 'completed':
+        this.state = {
+          name: 'Résolu',
+          icon: 'checkmark-circle'
+        };
+        break;
+    }
+    console.log(this.state);
   }
 
 }

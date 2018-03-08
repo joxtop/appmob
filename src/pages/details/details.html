@@ -4,19 +4,45 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header *ngIf='issue'>
 
   <ion-navbar>
-    <ion-title>DetailsPage</ion-title>
+    <ion-title>{{issue.description.substring(0,25)}}...</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content>
-  <ion-img *ngIf='issue' width="100%" height="80px" src="{{issue.imageUrl}}"></ion-img>
-
-  {{issue | json}}
-
-  <p>Address : {{issueAddress}}</p>
+<ion-content *ngIf='issue'>
+  <ion-card>
+    <img *ngIf='issue.imageUrl' src="{{issue.imageUrl}}"/>
+    <ion-card-content>
+      <ion-card-title>
+        {{issue.description.substring(0,25)}}...
+      </ion-card-title>
+      <p>
+        {{issue.description}}
+      </p>
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="pin"></ion-icon>
+          <div *ngIf='issueAddress'>{{issueAddress}}</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="person"></ion-icon>
+          <div *ngIf='createdBy'>{{createdBy.firstname}} {{createdBy.lastname}}</div>
+        </button>
+      </ion-col>
+      <ion-col *ngIf='state'>
+        <button ion-button icon-left clear small>
+          <ion-icon name="{{state.icon}}"></ion-icon>
+          <div>{{state.name}}</div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>
