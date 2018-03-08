@@ -8,18 +8,32 @@
 
   <ion-navbar>
     <ion-title>CreateIssue</ion-title>
-
-    <!-- Logout button -->
-    <ion-buttons end>
-      <button ion-button icon-only (click)="logOut()">
-        <ion-icon name="log-out"></ion-icon>
-      </button>
-    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  Let's create an issue.
+    <ion-list>
+
+        <ion-item>
+          <ion-input disabled type="text" placeholder="Adresse"></ion-input>
+        </ion-item>
+      
+        <ion-item>
+          <ion-input  type="password" placeholder="Description"></ion-input>
+        </ion-item>
+
+            <ion-item>
+              <ion-input type="text" placeholder="Tags"></ion-input>
+            </ion-item>
+          
+            <ion-item>
+                <ion-input type="search" placeholder="Image"></ion-input>
+            </ion-item>
+    </ion-list>
+
+    <div padding>
+        <button ion-button color="light" block>Create</button>
+      </div>
 </ion-content>

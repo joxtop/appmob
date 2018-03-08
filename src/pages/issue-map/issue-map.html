@@ -7,6 +7,7 @@
 <ion-header>
 
   <ion-navbar>
+    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
     <ion-title>IssueMap</ion-title>
   </ion-navbar>
 
@@ -14,5 +15,12 @@
 
 
 <ion-content padding>
-  Let's display a map.
+  <div class='map' leaflet [leafletOptions]='mapOptions' [leafletLayers]='mapMarkers'></div>
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+      <button ion-button color="dark" clear (click)="openCreateIssuePage()"><ion-icon name="add-circle" margin-right></ion-icon>
+        Create an issue</button>
+    </ion-toolbar>
+  </ion-footer>

@@ -15,6 +15,7 @@ import { NavController, NavParams } from 'ionic-angular';
 export class IssueListPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    
   }
 
   ionViewDidLoad() {

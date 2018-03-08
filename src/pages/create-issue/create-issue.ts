@@ -36,8 +36,6 @@ export class CreateIssuePage {
     });
   }
 
-  logOut() {
-    this.auth.logOut();
-  }
+  
 
 }
