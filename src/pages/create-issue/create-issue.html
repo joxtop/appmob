@@ -17,8 +17,8 @@
 
     <ion-list>
 
-        <ion-item>
-          <ion-input disabled type="text" placeholder="Adresse"></ion-input>
+        <ion-item *ngIf="address">
+          <ion-input disabled type="text" placeholder="Adresse"> {{address}}</ion-input>
         </ion-item>
       
         <ion-item>

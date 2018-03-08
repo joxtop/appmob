@@ -87,4 +87,6 @@
     <plugin name="cordova-plugin-nativegeocoder" spec="^3.1.1" />
     <plugin name="cordova-plugin-camera" spec="^4.0.2" />
     <engine name="android" spec="7.0.0" />
+    <allow-navigation href="http://10.192.115.195:8101" />
+    <allow-navigation href="http://10.192.115.195:8100" />
 </widget>
