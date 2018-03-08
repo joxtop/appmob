@@ -18,7 +18,7 @@
   <ion-list *ngIf='issues'>
     <ion-item *ngFor='let issue of issues'>
       <ion-thumbnail item-start>
-        <img src="{{issue.imageUrl}}">
+        <img *ngIf='issue.imageUrl' src="{{issue.imageUrl}}">
       </ion-thumbnail>
       <h2>{{issue.description}}</h2>
       <p>Status: {{issue.state}}</p>
