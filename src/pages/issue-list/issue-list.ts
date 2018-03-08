@@ -18,9 +18,11 @@ import { DetailsPage } from '../details/details';
 })
 export class IssueListPage {
 
+
   issues: Issue[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private issueService: IssueProvider) {
+
   }
 
   ionViewDidLoad() {

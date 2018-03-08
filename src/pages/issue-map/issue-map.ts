@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+import {CreateIssuePage} from '../create-issue/create-issue';
+import { latLng, MapOptions, marker, Marker, tileLayer } from 'leaflet';
+
+
 /**
  * Generated class for the IssueMapPage page.
  *
@@ -13,12 +17,33 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'issue-map.html',
 })
 export class IssueMapPage {
+  mapOptions: MapOptions;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  mapMarkers: Marker[];
+
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams) {
+    const tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    const tileLayerOptions = { maxZoom: 18 };
+    this.mapOptions = {
+      layers: [
+        tileLayer(tileLayerUrl, tileLayerOptions)
+      ],
+      zoom: 13,
+      center: latLng(46.778186, 6.641524)
+    };
+    this.mapMarkers = [
+      marker([ 46.778186, 6.641524 ]).bindTooltip('Hello'),
+      marker([ 46.780796, 6.647395 ]),
+      marker([ 46.784992, 6.652267 ])
+    ];
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad IssueMapPage');
   }
 
+  openCreateIssuePage(){
+    this.navCtrl.push(CreateIssuePage);
+  }
 }

@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
+// TODO: import the authentication provider and login page.
+import { AuthProvider } from '../../providers/auth/auth';
+import { LoginPage } from '../login/login';
+import { HttpClient } from '@angular/common/http';
 
-import { CreateIssuePage } from '../create-issue/create-issue';
 import { IssueMapPage } from '../issue-map/issue-map';
-import { IssueListPage } from '../issue-list/issue-list';
+import {IssueListPage} from '../issue-list/issue-list';
+
+
 
 export interface HomePageTab {
   title: string;
@@ -17,14 +22,24 @@ export interface HomePageTab {
 })
 export class HomePage {
 
-  tabs: HomePageTab[];
+  rootPage: any;
 
-  constructor(public navCtrl: NavController) {
-    this.tabs = [
-      { title: 'New Issue', icon: 'add', component: CreateIssuePage },
-      { title: 'Issue Map', icon: 'map', component: IssueMapPage },
-      { title: 'Issue List', icon: 'list', component: IssueListPage }
-    ];
+  constructor( // TODO: inject the authentication provider.
+    private auth: AuthProvider,
+    public http: HttpClient,
+    public navCtrl: NavController,
+    public navParams: NavParams) {
+
+    this.rootPage = IssueMapPage
   }
+
+  logOut() {
+    this.auth.logOut();
+  }
+
+  openIssueListPage(){
+    this.navCtrl.push(IssueListPage);
+  }
+  
 
 }
