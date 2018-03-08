@@ -5,7 +5,13 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
+
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+
+import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder } from '@ionic-native/native-geocoder';
+import { Camera } from '@ionic-native/camera';
+
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -15,7 +21,11 @@ import { IssueMapPage } from '../pages/issue-map/issue-map';
 import { LoginPage } from '../pages/login/login';
 import { AuthProvider } from '../providers/auth/auth';
 import { AuthInterceptorProvider } from '../providers/auth-interceptor/auth-interceptor';
-import { Geolocation } from '@ionic-native/geolocation';
+
+import { UserProvider } from '../providers/user/user';
+import { IssueProvider } from '../providers/issue/issue';
+import { DetailsPage } from './../pages/details/details';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +34,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     CreateIssuePage,
     IssueListPage,
     IssueMapPage,
-    LoginPage
+    LoginPage,
+    DetailsPage
   ],
   imports: [
     BrowserModule,
@@ -40,16 +51,22 @@ import { Geolocation } from '@ionic-native/geolocation';
     CreateIssuePage,
     IssueListPage,
     IssueMapPage,
-    LoginPage
+    LoginPage,
+    DetailsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    Geolocation,
+
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorProvider, multi: true },
-    
+    UserProvider,
+    IssueProvider,
+    Geolocation,
+    NativeGeocoder,
+    Camera
+
   ]
 })
 export class AppModule {}
