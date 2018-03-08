@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { AuthProvider } from '../../providers/auth/auth';
 import { LoginPage } from '../login/login';
@@ -24,6 +25,20 @@ export class CreateIssuePage {
 
   pictureData: string;
   address: string;
+  newIssue: {
+    location: {
+      latitude: number,
+      longitude: number
+    },
+    description: string,
+    tags: string[],
+    imageURL: string
+  };
+
+  new = {}
+  logForm() {
+    console.log(this.new)
+  }
   
 
   constructor(
@@ -33,8 +48,20 @@ export class CreateIssuePage {
     public navParams: NavParams,
     private geolocation: Geolocation,
     private camera: Camera,
-    private nativeGeocoder: NativeGeocoder
+    private nativeGeocoder: NativeGeocoder,
+    private formBuilder: FormBuilder
   ) {
+
+    this.newIssue = {
+      location: {
+      latitude: 6.33333,
+      longitude: 56.66093
+    },
+    description: 'test1',
+    tags: ['testTag', '2emetag'],
+    imageURL: 'unURL'
+  }
+
   }
 
   ionViewDidLoad() {
@@ -53,7 +80,6 @@ export class CreateIssuePage {
       
     }).catch(err => {
       console.warn(`Could not retrieve user position because: ${err.message}`);
-      //this.loadAddress(6.6476353999999995, 46.7806285);
     });
   }
 
