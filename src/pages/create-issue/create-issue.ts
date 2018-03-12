@@ -1,14 +1,13 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
-import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+//import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { AuthProvider } from '../../providers/auth/auth';
-import { LoginPage } from '../login/login';
-import { config } from '../../app/config';
+import { NewIssue } from '../../models/new-issue';
+import { IssueProvider } from '../../providers/issue/issue';
+import { IssueType } from '../../models/issue-type';
 
 /**
  * Generated class for the CreateIssuePage page.
@@ -23,60 +22,49 @@ import { config } from '../../app/config';
 })
 export class CreateIssuePage {
 
+  startMap: (latitude: number, longitude: number) => void;
   pictureData: string;
-  address: string;
-  newIssue: {
-    location: {
-      latitude: number,
-      longitude: number
-    },
-    description: string,
-    tags: string[],
-    imageURL: string
-  };
-
-  new = {}
-  logForm() {
-    console.log(this.new)
-  }
+  myAddress: string;
+  newIssue: NewIssue;
+  issueTypes: IssueType[];
   
-
   constructor(
     private auth: AuthProvider,
-    private httpClient: HttpClient,
     public navCtrl: NavController,
     public navParams: NavParams,
     private geolocation: Geolocation,
     private camera: Camera,
-    private nativeGeocoder: NativeGeocoder,
-    private formBuilder: FormBuilder
+    private issueService: IssueProvider,
+    //private formBuilder: FormBuilder
   ) {
-
     this.newIssue = {
       location: {
-      latitude: 6.33333,
-      longitude: 56.66093
-    },
-    description: 'test1',
-    tags: ['testTag', '2emetag'],
-    imageURL: 'unURL'
-  }
-
+        latitude: 0,
+        longitude: 0
+      },
+      description: '',
+      tags: [],
+      imageURL: '',
+      issueType: ''
+    };
+    this.startMap = issueService.startExternalMap;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateIssuePage');
-
-    //const url = `${config.apiUrl}/issueTypes`;
-    //this.httpClient.get(url).subscribe(issueTypes => {
-    //  console.log('Issue types loaded', issueTypes);
-    //});
+    this.issueService.getIssueTypes().subscribe(issueTypes => {
+      this.issueTypes = issueTypes;
+    });
 
     const geolocationPromise = this.geolocation.getCurrentPosition();
     geolocationPromise.then(position => {
-      const coords = position.coords;
-      console.log(`User is at ${coords.longitude}, ${coords.latitude}`);
-      this.loadAddress(coords.longitude, coords.latitude);
+      this.newIssue.location.latitude = position.coords.latitude;
+      this.newIssue.location.longitude = position.coords.longitude;
+      console.log(`User is at ${this.newIssue.location.latitude}, ${this.newIssue.location.longitude}`);
+      this.issueService.reverseGeocode(this.newIssue.location.latitude, this.newIssue.location.longitude).then((myAddress) => {
+        this.myAddress = myAddress;
+      }).catch((error) => {
+        this.myAddress = 'Adresse inconnue';
+      });
       
     }).catch(err => {
       console.warn(`Could not retrieve user position because: ${err.message}`);
@@ -96,13 +84,8 @@ export class CreateIssuePage {
       console.warn(`Could not take picture because: ${err.message}`);
     });
   }
-  private loadAddress(longitude, latitude) {
-    this.nativeGeocoder.reverseGeocode(latitude, longitude )
-      .then((result: NativeGeocoderReverseResult) => { 
-        this.address = `${result[0].thoroughfare} ${result[0].subThoroughfare}, ${result[0].postalCode} ${result[0].locality}`;
-      })
-      .catch((error: any) => console.log(error));
-  }
-  
 
+  createIssue() {
+    console.log(this.newIssue);
+  }
 }

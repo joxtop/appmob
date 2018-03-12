@@ -1,23 +1,12 @@
-<!--<ion-tabs>
-  <ion-tab *ngFor='let tab of tabs' [tabTitle]='tab.title' [tabIcon]='tab.icon' [root]='tab.component'></ion-tab>
-</ion-tabs>
--->
-
 <ion-menu [content]="mycontent">
   <ion-content>
     <ion-list>
-        <button ion-item (click)="openPage()">
-            Profile
-          </button>
-          <button ion-item (click)="openPage()">
-            Your problems
-          </button>
-          <button ion-item (click)="openIssueListPage()">
-             Problems List
-            </button>
+      <button *ngFor="let page of pages" ion-item (click)="openPage(page)">
+        {{page.title}}
+      </button>
 
       <!-- Logout button -->
-    <ion-buttons end>
+      <ion-buttons end>
         <button ion-button icon-only (click)="logOut()">
           <ion-icon name="log-out"></ion-icon>
         </button>

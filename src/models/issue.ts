@@ -1,3 +1,7 @@
+import { IssueAction } from "./issue-action";
+import { IssueType } from "./issue-type";
+import { User } from "./user";
+
 export class Issue {
     assigneeHref: string;
     createdAt: Date;
@@ -17,5 +21,9 @@ export class Issue {
     };
     state: string;
     tags: [string];
-    updatedAt: Date
+    updatedAt: Date;
+    actions: IssueAction[];
+    assignee: User;
+    creator: User;
+    issueType: IssueType;
 }
