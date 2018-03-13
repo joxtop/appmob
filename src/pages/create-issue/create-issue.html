@@ -7,38 +7,41 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>CreateIssue</ion-title>
+    <ion-title>Reporter un problème</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <form #form="ngForm" (ngSubmit)="logForm(form)">
+    <ion-item *ngIf="issueTypes">
+      <ion-label>Type de problème</ion-label>
+      <ion-select [(ngModel)]="newIssue.issueType" name="issueType">
+        <ion-option *ngFor="let issueType of issueTypes" [value]="issueType.name">{{ issueType.name }}</ion-option>
+      </ion-select>
+    </ion-item>
 
-    <form #form="ngForm" (ngSubmit)="logForm(form)">
+    <ion-item *ngIf='myAddress'>
+      <p><ion-icon name="pin"></ion-icon> {{ myAddress }}</p>
+    </ion-item>
+  
+    <ion-item>
+      <ion-textarea rows="5" type="text" name="description" required [(ngModel)]="newIssue.description" ngControl="description" placeholder="Description"></ion-textarea>
+    </ion-item>
 
-        <ion-item *ngIf="address">
-          <ion-input disabled type="text" name="location" required [(ngModel)]="adresse" ngControl="location" placeholder="Adresse"></ion-input>
-        </ion-item>
-      
-        <ion-item>
-          <ion-input  type="text" name="description" required [(ngModel)]="newIssue.description" ngControl="description" placeholder="Description"></ion-input>
-        </ion-item>
+    <ion-item>
+      <ion-tags-input [canEnterAdd]="false" type="text" name="tags" [(ngModel)]="newIssue.tags" ngControl="tags" placeholder="Tags"></ion-tags-input>
+    </ion-item>
+  
+    <ion-item>
+      <button ion-button round outline  (click)='takePicture()'>Attach file</button>
+      <img *ngIf='pictureData' [(ngModel)]="newIssue.imageURL" ngControl="imageURL" src='data:image/jpeg;base64,{{ pictureData }}' />
+    </ion-item>
 
-            <ion-item>
-              <ion-input type="text" name="tags" [(ngModel)]="newIssue.tags" ngControl="tags" placeholder="Tags"></ion-input>
-            </ion-item>
-          
-            <ion-item>
-                 <button ion-button round outline  (click)='takePicture()'>Attach file</button>
-                <img *ngIf='pictureData' [(ngModel)]="newIssue.imageURL" ngControl="imageURL" src='data:image/jpeg;base64,{{ pictureData }}' />
-
-            </ion-item>
-          </form>
-
-    <div padding>
-        <button ion-button color="light" type="submit" [disabled]="!newIssue.valid" block>Create</button>
-      </div>
-
- 
+    <ion-item>
+      <button ion-button color="light" type="submit" block (click)="createIssue()">Create</button>
+    </ion-item>
+  </form>
+  <p>{{ newIssue | json }}</p>
 </ion-content>

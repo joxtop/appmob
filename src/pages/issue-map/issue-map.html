@@ -8,19 +8,25 @@
 
   <ion-navbar>
     <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
-    <ion-title>IssueMap</ion-title>
+    <ion-title>Citizen Engagement</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+<<<<<<< HEAD
   <div *ngIf="mapOptions.center" class='map' leaflet [leafletOptions]='mapOptions' [leafletLayers]='mapMarkers' (leafletMapReady)='onMapReady($event)'></div>
+=======
+  <div *ngIf="mapMarkers.length>0" class="map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"></div>
+>>>>>>> 819792f21b1e7cca9ab8393a2270e82710441bbf
 </ion-content>
 
 <ion-footer>
-    <ion-toolbar>
-      <button ion-button color="dark" clear (click)="openCreateIssuePage()"><ion-icon name="add-circle" margin-right></ion-icon>
-        Create an issue</button>
-    </ion-toolbar>
-  </ion-footer>
+  <ion-toolbar>
+    <button ion-button color="dark" clear (click)="openCreateIssuePage()">
+      <ion-icon name="add-circle" margin-right></ion-icon>
+      Reporter un problème
+    </button>
+  </ion-toolbar>
+</ion-footer>

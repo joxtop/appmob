@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-// TODO: import the authentication provider and login page.
+
 import { AuthProvider } from '../../providers/auth/auth';
 import { LoginPage } from '../login/login';
-import { HttpClient } from '@angular/common/http';
 
+import { ProfilePage } from '../profile/profile';
+import { IssueListPage } from '../issue-list/issue-list';
 import { IssueMapPage } from '../issue-map/issue-map';
-import {IssueListPage} from '../issue-list/issue-list';
+import { User } from '../../models/user';
 
 
 
@@ -23,23 +24,38 @@ export interface HomePageTab {
 export class HomePage {
 
   rootPage: any;
+  pages: Array<{title: string, component: any, user?: User}>;
+  profile: User;
 
   constructor( // TODO: inject the authentication provider.
     private auth: AuthProvider,
-    public http: HttpClient,
     public navCtrl: NavController,
-    public navParams: NavParams) {
+    public navParams: NavParams) 
+  {
+    // set the root page
+    this.rootPage = IssueMapPage;
 
-    this.rootPage = IssueMapPage
+    this.auth.getUser().subscribe((user) => {
+      this.profile = user;
+
+      // set our app's pages
+      this.pages = [
+        { title: 'Mon profile', component: ProfilePage, user: this.profile },
+        { title: 'Problèmes reportés', component: IssueListPage, user: this.profile },
+        { title: 'Liste des problèmes', component: IssueListPage }
+      ];
+    });
   }
 
   logOut() {
     this.auth.logOut();
   }
 
-  openIssueListPage(){
-    this.navCtrl.push(IssueListPage);
+  openPage(page: any) {
+    console.log(page);
+    this.navCtrl.push(page.component, {
+      user: page.user,
+      title: page.title
+    });
   }
-  
-
 }

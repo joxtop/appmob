@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
+
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 
 import {CreateIssuePage} from '../create-issue/create-issue';
 import { latLng, MapOptions, marker, Marker, Map, tileLayer } from 'leaflet';
 
+import { IssueProvider } from '../../providers/issue/issue';
+import { Issue } from '../../models/issue';
 
 
 /**
@@ -19,19 +22,19 @@ import { latLng, MapOptions, marker, Marker, Map, tileLayer } from 'leaflet';
   templateUrl: 'issue-map.html',
 })
 export class IssueMapPage {
-  getCenter(latitude, longitude) {
-    
-  }
+  loadingCtrl: any;
+  issues: Issue[];
   mapOptions: MapOptions;
   mapMarkers: Marker[];
   userMarker: Marker;
   map: Map;
 
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
-              private geolocation: Geolocation,
-              public loadingCtrl: LoadingController) {
-    
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private issueService: IssueProvider
+
+  ) {
     const tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tileLayerOptions = { maxZoom: 18 };
   
@@ -43,12 +46,7 @@ export class IssueMapPage {
       zoom: 14,
       //center: latLng(46.778186, 6.641524)
     };
-
-    this.mapMarkers = [
-      marker([ 46.778186, 6.641524 ]).bindTooltip('Hello'),
-      marker([ 46.780796, 6.647395 ]),
-      marker([ 46.784992, 6.652267 ])
-    ];
+    this.mapMarkers = [];
   }
   presentLoadingDefault() {
     let loading = this.loadingCtrl.create({
@@ -64,24 +62,18 @@ export class IssueMapPage {
   ionViewDidLoad() {
     this.presentLoadingDefault;
     console.log('ionViewDidLoad IssueMapPage');
-    //afficher loading
-    
-    const geolocationPromise = this.geolocation.getCurrentPosition();
-    geolocationPromise.then(position => {
-      const coords = position.coords;
-      console.log(`User is at ${coords.longitude}, ${coords.latitude}`);
-      //this.userMarker = new Marker ([coords.latitude, coords.longitude]);
-      //this.userMarker.addTo(this.map);
-      //cacher loadinf
-      this.mapOptions.center= latLng(coords.latitude, coords.longitude);
-    }).catch(err => {
-      //cacher loading
-      this.mapOptions.center= latLng(46.778186, 6.641524);
-      console.warn(`Could not retrieve user position because: ${err.message}`);
-    });
+    this.loadIssues();
   }
-  onMapReady(map: Map) {
-    this.map = map;
+
+  private loadIssues(search?: string) {
+    let searchedValue = search ? search : undefined;
+    this.issueService.getIssues(['creator'], searchedValue, ['createdAt']).subscribe(issues => {
+      this.issues = issues;
+      issues.forEach((issue) => {
+        this.mapMarkers.push(marker([issue.location.coordinates[1], issue.location.coordinates[1]]).bindTooltip(issue.description));
+      });
+      console.log(this.mapMarkers);
+    });
   }
   openCreateIssuePage(){
     this.navCtrl.push(CreateIssuePage);

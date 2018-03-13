@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>IssueList</ion-title>
+    <ion-title>{{ pageTitle }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,14 +15,15 @@
 
 <ion-content>
   <ion-searchbar showCancelButton (ionInput)="onInput($event)" (ionCancel)="onCancel($event)"></ion-searchbar>
-  <ion-list *ngIf='issues'>
-    <ion-item *ngFor='let issue of issues'>
+  <ion-list *ngIf='filteredIssues'>
+    <button ion-item *ngFor='let issue of filteredIssues' (click)='goToDetails(issue.id)'>
       <ion-thumbnail item-start>
         <img *ngIf='issue.imageUrl' src="{{issue.imageUrl}}">
+        <img *ngIf='!issue.imageUrl' src="assets/imgs/placeholder.png">
       </ion-thumbnail>
       <h2>{{issue.description}}</h2>
-      <p>Status: {{issue.state}}</p>
-      <button ion-button clear item-end (click)='goToDetails(issue.id)'>View</button>
-    </ion-item>
+      <p><ion-icon [name]="loadState(issue)?.icon"></ion-icon> {{loadState(issue)?.name}} • 
+      <ion-icon name="person"></ion-icon> {{ issue.creator.firstname }} {{ issue.creator.lastname }}</p>
+    </button>
   </ion-list>
 </ion-content>
