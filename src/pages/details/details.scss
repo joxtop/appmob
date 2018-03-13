@@ -4,9 +4,14 @@ page-details {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-      }
+    }
 
-     button {
+    button {
         overflow: hidden;
-     } 
+    }
+
+    ion-spinner {
+        display: block;
+        margin:50px auto;
+    }
 }

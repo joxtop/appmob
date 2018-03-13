@@ -14,7 +14,12 @@
 
 
 <ion-content padding>
-  <form #form="ngForm" (ngSubmit)="logForm(form)">
+  <div *ngIf="!issueTypes || !myAddress">
+    <ion-spinner></ion-spinner>
+    <p text-center>Géolocalisation en cours...</p>
+  </div>
+  
+  <form *ngIf="issueTypes && myAddress" #form="ngForm" (ngSubmit)="logForm(form)">
     <ion-item *ngIf="issueTypes">
       <ion-label>Type de problème</ion-label>
       <ion-select [(ngModel)]="newIssue.issueType" name="issueType">
@@ -42,6 +47,6 @@
     <ion-item>
       <button ion-button color="light" type="submit" block (click)="createIssue()">Create</button>
     </ion-item>
+    <p>{{ newIssue | json }}</p>
   </form>
-  <p>{{ newIssue | json }}</p>
 </ion-content>

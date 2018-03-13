@@ -7,13 +7,15 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{issue?.description}}</ion-title>
+    <ion-title *ngIf="!issue">Chargement...</ion-title>
+    <ion-title *ngIf="issue">{{issue.description}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
+  <ion-spinner *ngIf="!issue"></ion-spinner>
   <ion-card *ngIf='issue'>
     <img *ngIf='issue.imageUrl' src="{{issue.imageUrl}}"/>
     <ion-card-content>

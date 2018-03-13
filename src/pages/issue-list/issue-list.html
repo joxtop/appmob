@@ -12,10 +12,10 @@
 
 </ion-header>
 
-
 <ion-content>
-  <ion-searchbar showCancelButton (ionInput)="onInput($event)" (ionCancel)="onCancel($event)"></ion-searchbar>
-  <ion-list *ngIf='filteredIssues'>
+  <ion-searchbar showCancelButton (ionInput)="onInput($event)" (ionCancel)="onCancel($event)" disabled="{{!filteredIssues}}"></ion-searchbar>
+  <ion-spinner *ngIf="!filteredIssues"></ion-spinner>
+  <ion-list *ngIf="filteredIssues">
     <button ion-item *ngFor='let issue of filteredIssues' (click)='goToDetails(issue.id)'>
       <ion-thumbnail item-start>
         <img *ngIf='issue.imageUrl' src="{{issue.imageUrl}}">
