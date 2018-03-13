@@ -27,11 +27,10 @@ export class CreateIssuePage {
   address: string;
   newIssue: {
     location: {
-      latitude: number,
-      longitude: number
-    },
-    description: string,
-    tags: string[],
+      coordinates: number[],
+    };
+    description: string;
+    tags: string[];
     imageURL: string
   };
 
@@ -52,15 +51,6 @@ export class CreateIssuePage {
     private formBuilder: FormBuilder
   ) {
 
-    this.newIssue = {
-      location: {
-      latitude: 6.33333,
-      longitude: 56.66093
-    },
-    description: 'test1',
-    tags: ['testTag', '2emetag'],
-    imageURL: 'unURL'
-  }
 
   }
 

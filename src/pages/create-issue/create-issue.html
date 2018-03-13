@@ -18,7 +18,7 @@
     <form #form="ngForm" (ngSubmit)="logForm(form)">
 
         <ion-item *ngIf="address">
-          <ion-input disabled type="text" name="location" required [(ngModel)]="newIssue.location" ngControl="location" placeholder="Adresse"> {{address}}</ion-input>
+          <ion-input disabled type="text" name="location" required [(ngModel)]="adresse" ngControl="location" placeholder="Adresse"></ion-input>
         </ion-item>
       
         <ion-item>
