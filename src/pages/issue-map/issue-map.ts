@@ -4,7 +4,7 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 
 import {CreateIssuePage} from '../create-issue/create-issue';
-import { latLng, MapOptions, marker, Marker, Map, tileLayer } from 'leaflet';
+import { LatLng, latLng, MapOptions, marker, Marker, Map, tileLayer } from 'leaflet';
 
 import { IssueProvider } from '../../providers/issue/issue';
 import { Issue } from '../../models/issue';
@@ -22,7 +22,9 @@ import { Issue } from '../../models/issue';
   templateUrl: 'issue-map.html',
 })
 export class IssueMapPage {
-  loadingCtrl: any;
+  lng: number;
+  lat: number;
+  myAddress: string;
   issues: Issue[];
   mapOptions: MapOptions;
   mapMarkers: Marker[];
@@ -32,37 +34,36 @@ export class IssueMapPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
-    private issueService: IssueProvider
+    private issueService: IssueProvider,
+    private geolocation: Geolocation,
 
   ) {
     const tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tileLayerOptions = { maxZoom: 18 };
-  
-  
     this.mapOptions = {
       layers: [
         tileLayer(tileLayerUrl, tileLayerOptions)
       ],
       zoom: 14,
-      //center: latLng(46.778186, 6.641524)
+      center: latLng(46.5160000, 6.6328200)
     };
     this.mapMarkers = [];
   }
-  presentLoadingDefault() {
-    let loading = this.loadingCtrl.create({
-      spinner: 'hide',
-      content: `
-        <div class="custom-spinner-container">
-          <div class="custom-spinner-box"></div>
-        </div>`,
-    });
-    loading.present();
-  }
+
 
   ionViewDidLoad() {
-    this.presentLoadingDefault;
     console.log('ionViewDidLoad IssueMapPage');
     this.loadIssues();
+
+    const geolocationPromise = this.geolocation.getCurrentPosition();
+    geolocationPromise.then(position => {
+      console.log(position);
+      this.mapOptions.center = latLng(position.coords.latitude, position.coords.longitude);
+      console.log(`User is at ${this.lat}, ${this.lng}`);
+    }).catch(err => {
+      console.warn(`Could not retrieve user position because: ${err.message}`);
+    });
+
   }
 
   private loadIssues(search?: string) {
@@ -70,11 +71,12 @@ export class IssueMapPage {
     this.issueService.getIssues(['creator'], searchedValue, ['createdAt']).subscribe(issues => {
       this.issues = issues;
       issues.forEach((issue) => {
-        this.mapMarkers.push(marker([issue.location.coordinates[1], issue.location.coordinates[1]]).bindTooltip(issue.description));
+        this.mapMarkers.push(marker([issue.location.coordinates[1], issue.location.coordinates[0]]).bindTooltip(issue.description));
       });
       console.log(this.mapMarkers);
     });
   }
+
   openCreateIssuePage(){
     this.navCtrl.push(CreateIssuePage);
   }
