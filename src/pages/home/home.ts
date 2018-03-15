@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { AuthProvider } from '../../providers/auth/auth';
 import { LoginPage } from '../login/login';
@@ -8,6 +9,7 @@ import { ProfilePage } from '../profile/profile';
 import { IssueListPage } from '../issue-list/issue-list';
 import { IssueMapPage } from '../issue-map/issue-map';
 import { User } from '../../models/user';
+import { TutoPage } from '../tuto/tuto';
 
 
 
@@ -27,11 +29,12 @@ export class HomePage {
   pages: Array<{title: string, component: any, user?: User}>;
   profile: User;
 
-  constructor( // TODO: inject the authentication provider.
+  constructor(
     private auth: AuthProvider,
     public navCtrl: NavController,
-    public navParams: NavParams) 
-  {
+    public navParams: NavParams,
+    public storage: Storage
+  ) {
     // set the root page
     this.rootPage = IssueMapPage;
 
@@ -44,6 +47,15 @@ export class HomePage {
         { title: 'Problèmes reportés', component: IssueListPage, user: this.profile },
         { title: 'Liste des problèmes', component: IssueListPage }
       ];
+    });
+  }
+
+  ionViewDidLoad() {
+    this.storage.get('tuto-done').then(done => {
+      if (!done) {
+        this.storage.set('tuto-done', true);
+        this.navCtrl.setRoot(TutoPage);
+      }
     });
   }
 

@@ -21,9 +21,14 @@
     border-radius: 5px;
 }
 
-.vertical-align-content > *
-{
+.vertical-align-content > * {
      display: flex!important;
      align-content: center!important;
      align-items: center!important;
+}
+
+.info {
+    background-color: #abd7ea;
+    padding: 10px;
+    border-radius: 5px;
 }

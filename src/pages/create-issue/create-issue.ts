@@ -54,7 +54,6 @@ export class CreateIssuePage {
     private geolocation: Geolocation,
     private issueService: IssueProvider,
     private pictureService: PictureProvider
-    //private formBuilder: FormBuilder
   ) {
     this.newIssue = {
       location: {

@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 
 import { NewUser } from '../../models/new-user';
 import { UserProvider } from '../../providers/user/user';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the RegisterPage page.
@@ -18,6 +19,7 @@ import { UserProvider } from '../../providers/user/user';
 })
 export class RegisterPage {
 
+  subscribeError: boolean;
   newUser: NewUser;
 
   /**
@@ -32,6 +34,7 @@ export class RegisterPage {
     private userService: UserProvider
   ) {
     this.newUser = new NewUser();
+    this.subscribeError = false;
   }
 
   /**
@@ -47,10 +50,17 @@ export class RegisterPage {
       return;
     }
 
+    this.subscribeError = false;
+
+    this.newUser.roles = ['citizen'];
+
     // Create a new user.
     this.userService.createUser(this.newUser).subscribe(user => {
-      console.log(user);
+      this.navCtrl.push(LoginPage, {
+        info: "L'utilisateur à été créé avec succès"
+      });
     }, err => {
+      this.subscribeError = true;
       console.warn(`Could not create the user: ${err.message}`);
     });
   }
