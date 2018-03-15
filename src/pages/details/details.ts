@@ -1,11 +1,26 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import {
+  Component
+} from '@angular/core';
+import {
+  NavController,
+  NavParams
+} from 'ionic-angular';
 
-import { Issue } from '../../models/issue';
-import { IssueProvider } from '../../providers/issue/issue';
-import { UserProvider } from '../../providers/user/user';
-import { User } from '../../models/user';
-import { ProfilePage } from '../profile/profile';
+import {
+  Issue
+} from '../../models/issue';
+import {
+  IssueProvider
+} from '../../providers/issue/issue';
+import {
+  UserProvider
+} from '../../providers/user/user';
+import {
+  User
+} from '../../models/user';
+import {
+  ProfilePage
+} from '../profile/profile';
 
 /**
  * Generated class for the DetailsPage page.
@@ -26,8 +41,8 @@ export class DetailsPage {
   startMap;
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
+    public navCtrl: NavController,
+    public navParams: NavParams,
     private issueService: IssueProvider
   ) {
     this.loadState = issueService.loadIssueState;
@@ -55,4 +70,3 @@ export class DetailsPage {
     });
   }
 }
-

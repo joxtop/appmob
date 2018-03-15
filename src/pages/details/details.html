@@ -8,7 +8,7 @@
 
   <ion-navbar>
     <ion-title *ngIf="!issue">Chargement...</ion-title>
-    <ion-title *ngIf="issue">{{issue.description}}</ion-title>
+    <ion-title *ngIf="issue">{{ issue.description }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -21,26 +21,29 @@
     <ion-card-content>
       <ion-card-title class="truncate" >{{ issue.description }}</ion-card-title>
       <p>{{ issue.description }}</p>
+      <ion-row class="vertical-align-content">
+        <ion-col>
+          <button ion-button icon-left clear small (click)='startMap(issue.location.coordinates[1], issue.location.coordinates[0])'>
+            <ion-icon name="pin"></ion-icon>
+            <div *ngIf='issueAddress'>{{ issueAddress }}</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <div><ion-icon [name]="loadState(issue)?.icon"></ion-icon> {{ loadState(issue)?.name }}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row class="vertical-align-content">
+        <ion-col>
+          <button ion-button icon-left clear small (click)='goToUser(issue.creator)'>
+            <ion-icon name="person"></ion-icon>
+            <div>{{ issue.creator.firstname }} {{ issue.creator.lastname }}</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <div><ion-icon name="md-calendar"></ion-icon> {{ issue.createdAt | date:'dd.MM.yyyy HH:mm' }}</div>
+        </ion-col>
+      </ion-row>
+      <issue-comments [issue]="issue"></issue-comments>
     </ion-card-content>
-    <ion-row>
-      <ion-col>
-        <button ion-button icon-left clear small (click)='startMap(issue.location.coordinates[1], issue.location.coordinates[0])'>
-          <ion-icon name="pin"></ion-icon>
-          <div *ngIf='issueAddress'>{{ issueAddress }}</div>
-        </button>
-      </ion-col>
-      <ion-col>
-        <button ion-button icon-left clear small (click)='goToUser(issue.creator)'>
-          <ion-icon name="person"></ion-icon>
-          <div>{{ issue.creator.firstname }} {{ issue.creator.lastname }}</div>
-        </button>
-      </ion-col>
-      <ion-col>
-        <button ion-button icon-left clear small>
-          <ion-icon [name]="loadState(issue)?.icon"></ion-icon>
-          <div>{{ loadState(issue)?.name }}</div>
-        </button>
-      </ion-col>
-    </ion-row>
   </ion-card>
 </ion-content>

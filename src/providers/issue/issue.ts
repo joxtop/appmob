@@ -9,6 +9,7 @@ import { Issue } from '../../models/issue';
 import { map } from 'rxjs/operators';
 import { NewIssue } from '../../models/new-issue';
 import { IssueType } from '../../models/issue-type';
+import { IssueComment } from '../../models/issue-comment';
 
 /*
   Generated class for the IssueProvider provider.
@@ -168,17 +169,26 @@ export class IssueProvider {
     );
   }
 
-  /*createIssue(newIssue: NewIssue) {
+  createIssue(newIssue: NewIssue): Observable<Issue> {
     const newIssueUrl = `${config.apiUrl}/issues`;
 
-    httpOptions = 
-
-    return this.http.post<Issue>(newIssueUrl, httpOptions).pipe(
+    return this.http.post<Issue>(newIssueUrl, newIssue).pipe(
       map(issue => {
         console.log(issue);
         return issue;
       })
     );
-  }*/
+  }
+
+  getIssueCommentsById(id: string): Observable<IssueComment[]> {
+    const issueCommentsUrl = `${config.apiUrl}/issues/${id}/comments?include=author`;
+
+    return this.http.get<IssueComment[]>(issueCommentsUrl).pipe(
+      map(issueComments => {
+        console.log(issueComments);
+        return issueComments;
+      })
+    );
+  }
 
 }

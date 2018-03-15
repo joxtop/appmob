@@ -1,13 +1,34 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { Geolocation } from '@ionic-native/geolocation';
-import { Camera, CameraOptions } from '@ionic-native/camera';
-//import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {
+  Component
+} from '@angular/core';
+import {
+  NavController,
+  NavParams
+} from 'ionic-angular';
+import {
+  Geolocation
+} from '@ionic-native/geolocation';
 
-import { AuthProvider } from '../../providers/auth/auth';
-import { NewIssue } from '../../models/new-issue';
-import { IssueProvider } from '../../providers/issue/issue';
-import { IssueType } from '../../models/issue-type';
+import {
+  AuthProvider
+} from '../../providers/auth/auth';
+import {
+  NewIssue
+} from '../../models/new-issue';
+import {
+  IssueProvider
+} from '../../providers/issue/issue';
+import {
+  IssueType
+} from '../../models/issue-type';
+import {
+  QimgImage
+} from '../../models/qimg-image';
+import {
+  PictureProvider
+} from '../../providers/picture/picture';
+import { NgForm } from '@angular/forms';
+import { DetailsPage } from '../details/details';
 
 /**
  * Generated class for the CreateIssuePage page.
@@ -22,70 +43,69 @@ import { IssueType } from '../../models/issue-type';
 })
 export class CreateIssuePage {
 
-  startMap: (latitude: number, longitude: number) => void;
-  pictureData: string;
   myAddress: string;
   newIssue: NewIssue;
   issueTypes: IssueType[];
-  
+
   constructor(
     private auth: AuthProvider,
     public navCtrl: NavController,
     public navParams: NavParams,
     private geolocation: Geolocation,
-    private camera: Camera,
     private issueService: IssueProvider,
+    private pictureService: PictureProvider
     //private formBuilder: FormBuilder
   ) {
     this.newIssue = {
       location: {
-        latitude: 0,
-        longitude: 0
+        coordinates: [0, 0],
+        type: "Point"
       },
       description: '',
       tags: [],
-      imageURL: '',
-      issueType: ''
+      imageUrl: '',
+      issueTypeHref: ''
     };
-    this.startMap = issueService.startExternalMap;
   }
 
   ionViewDidLoad() {
     this.issueService.getIssueTypes().subscribe(issueTypes => {
       this.issueTypes = issueTypes;
+      console.log(issueTypes);
     });
 
     const geolocationPromise = this.geolocation.getCurrentPosition();
     geolocationPromise.then(position => {
-      this.newIssue.location.latitude = position.coords.latitude;
-      this.newIssue.location.longitude = position.coords.longitude;
-      console.log(`User is at ${this.newIssue.location.latitude}, ${this.newIssue.location.longitude}`);
-      this.issueService.reverseGeocode(this.newIssue.location.latitude, this.newIssue.location.longitude).then((myAddress) => {
+      this.newIssue.location.coordinates[1] = position.coords.latitude;
+      this.newIssue.location.coordinates[0] = position.coords.longitude;
+      console.log(`User is at ${this.newIssue.location.coordinates[1]}, ${this.newIssue.location.coordinates[0]}`);
+      this.issueService.reverseGeocode(this.newIssue.location.coordinates[1], this.newIssue.location.coordinates[0]).then((myAddress) => {
         this.myAddress = myAddress;
       }).catch((error) => {
         this.myAddress = 'Adresse inconnue';
       });
-      
     }).catch(err => {
       console.warn(`Could not retrieve user position because: ${err.message}`);
     });
   }
 
   takePicture() {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    };
-    this.camera.getPicture(options).then(pictureData => {
-      this.pictureData = pictureData;
-    }).catch(err => {
-      console.warn(`Could not take picture because: ${err.message}`);
+    this.pictureService.takeAndUploadPicture().subscribe(picture => {
+      this.newIssue.imageUrl = picture.url;
+    }, err => {
+      console.warn('Could not take picture', err);
     });
   }
 
-  createIssue() {
-    console.log(this.newIssue);
+  createIssue(form: NgForm) {
+    if (form.valid) {
+      this.issueService.createIssue(this.newIssue).subscribe(newIssue => {
+        this.navCtrl.push(DetailsPage, {
+          id: newIssue.id
+        });
+      }, err => {
+        console.warn('Could not create the new issue', err);
+      });
+    }
   }
 }

@@ -27,6 +27,9 @@ import { IssueMapPage } from '../pages/issue-map/issue-map';
 import { LoginPage } from '../pages/login/login';
 import { DetailsPage } from './../pages/details/details';
 import { ProfilePage } from '../pages/profile/profile';
+import { PictureProvider } from '../providers/picture/picture';
+import { IssueComments } from '../pages/issue-comments/issue-comments';
+import { RegisterPage } from '../pages/register/register';
 
 
 @NgModule({
@@ -39,6 +42,8 @@ import { ProfilePage } from '../pages/profile/profile';
     LoginPage,
     DetailsPage,
     ProfilePage,
+    IssueComments,
+    RegisterPage
   ],
   imports: [
     BrowserModule,
@@ -59,6 +64,8 @@ import { ProfilePage } from '../pages/profile/profile';
     LoginPage,
     DetailsPage,
     ProfilePage,
+    IssueComments,
+    RegisterPage
   ],
   providers: [
     StatusBar,
@@ -73,6 +80,7 @@ import { ProfilePage } from '../pages/profile/profile';
     NativeGeocoder,
     Camera,
     LaunchNavigator,
+    PictureProvider,
   ]
 })
 export class AppModule {}

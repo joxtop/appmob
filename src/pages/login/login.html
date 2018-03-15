@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Login</ion-title>
+    <ion-title>Connexion</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,24 +19,24 @@
 
       <!-- Name input -->
       <ion-item>
-        <ion-label floating>Name</ion-label>
+        <ion-label floating>Nom d'utilisateur</ion-label>
         <ion-input type="text" name="name" #nameInput="ngModel" [(ngModel)]="authRequest.name" required></ion-input>
       </ion-item>
 
       <!-- Error message displayed if the name is invalid -->
       <ion-item *ngIf="nameInput.invalid && nameInput.dirty" no-lines>
-        <p ion-text color="danger">Name is required.</p>
+        <p ion-text color="danger">Le nom d'utilisateur est requis.</p>
       </ion-item>
 
       <!-- Password input -->
       <ion-item>
-        <ion-label floating>Password</ion-label>
+        <ion-label floating>Mot de passe</ion-label>
         <ion-input type="password" name="password" #passwordInput="ngModel" [(ngModel)]="authRequest.password" required></ion-input>
       </ion-item>
 
       <!-- Error message displayed if the password is invalid -->
       <ion-item *ngIf="passwordInput.invalid && passwordInput.dirty" no-lines>
-        <p ion-text color="danger">Password is required.</p>
+        <p ion-text color="danger">Le mot de passe est requis.</p>
       </ion-item>
 
     </ion-list>
@@ -44,11 +44,12 @@
     <div padding>
 
       <!-- Submit button -->
-      <button type="submit" [disabled]="form.invalid" ion-button block>Log in</button>
+      <button type="submit" [disabled]="form.invalid" ion-button block>Se connecter</button>
 
       <!-- Error message displayed if the login failed -->
-      <p *ngIf="loginError" ion-text color="danger">Name or password is invalid.</p>
+      <p *ngIf="loginError" ion-text color="danger">Nom d'utilisateur ou mot de passe invalide.</p>
 
+      <p>Vous n'êtes pas encore inscrit ? <a (click)="goToRegister()">Inscrivez-vous maintenant</a></p>
     </div>
   </form>
 </ion-content>

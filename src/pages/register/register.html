@@ -1,0 +1,85 @@
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>S'enregistrer</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <form (submit)="onSubmit($event)" #registerForm="ngForm">
+      <ion-list>
+  
+        <!-- Name input -->
+        <ion-item>
+          <ion-label floating>Nom d'utilisateur</ion-label>
+          <ion-input type="text" name="name" #nameInput="ngModel" [(ngModel)]="newUser.name" required max-length=25></ion-input>
+        </ion-item>
+  
+        <!-- Error message displayed if the name is invalid -->
+        <ion-item *ngIf="nameInput.invalid && nameInput.dirty" no-lines>
+          <p ion-text color="danger">Le nom d'utilisateur est requis.</p>
+        </ion-item>
+  
+        <!-- Password input -->
+        <ion-item>
+          <ion-label floating>Mot de passe</ion-label>
+          <ion-input type="password" name="password" #passwordInput="ngModel" [(ngModel)]="newUser.password" required minlength=4></ion-input>
+        </ion-item>
+
+        <!-- Error message displayed if the password is invalid -->
+        <ion-item *ngIf="passwordInput.invalid && passwordInput.dirty" no-lines>
+          <p ion-text color="danger">Le mot de passe est invalide.</p>
+        </ion-item>
+
+        <!-- Firstname input -->
+        <ion-item>
+          <ion-label floating>Prénom</ion-label>
+          <ion-input type="text" name="firstname" #firstnameInput="ngModel" [(ngModel)]="newUser.firstname" required minlength=2 maxlength=25></ion-input>
+        </ion-item>
+
+        <!-- Error message displayed if the firstname is invalid -->
+        <ion-item *ngIf="firstnameInput.invalid && firstnameInput.dirty" no-lines>
+          <p ion-text color="danger">Le prénom est invalide.</p>
+        </ion-item>
+
+        <!-- Lastname input -->
+        <ion-item>
+          <ion-label floating>Nom</ion-label>
+          <ion-input type="text" name="lastname" #lastnameInput="ngModel" [(ngModel)]="newUser.lastname" required minlength=2 maxlength=25></ion-input>
+        </ion-item>
+
+        <!-- Error message displayed if the lastname is invalid -->
+        <ion-item *ngIf="lastnameInput.invalid && lastnameInput.dirty" no-lines>
+          <p ion-text color="danger">Le nom est invalide.</p>
+        </ion-item>
+
+        <!-- Phone input -->
+        <ion-item>
+          <ion-label floating>Téléphone</ion-label>
+          <ion-input type="phone" name="phone" #phoneInput="ngModel" [(ngModel)]="newUser.phone" required maxlength=20></ion-input>
+        </ion-item>
+
+        <!-- Error message displayed if the phone is invalid -->
+        <ion-item *ngIf="phoneInput.invalid && phoneInput.dirty" no-lines>
+          <p ion-text color="danger">Le numéro de téléphone est invalide.</p>
+        </ion-item>
+  
+      </ion-list>
+  
+      <div padding>
+  
+        <!-- Submit button -->
+        <button type="submit" [disabled]="registerForm.invalid" ion-button block>S'enregistrer</button>
+  
+      </div>
+    </form>
+  </ion-content>
+  

@@ -1,12 +1,12 @@
 import { IssueType } from "./issue-type";
 
 export class NewIssue {
-    location: {
-      latitude: number,
-      longitude: number
-    };
-    description: string;
-    tags: string[];
-    imageURL: string;
-    issueType: string;
-  }
+  description: string;
+  imageUrl: string;
+  location: {
+    coordinates: [number, number],
+    type: string
+  };
+  tags: string[];
+  issueTypeHref: string;
+}

@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { User } from '../../models/user';
 import { config } from '../../app/config';
+import { NewUser } from '../../models/new-user';
 
 /*
   Generated class for the UserProvider provider.
@@ -21,11 +22,21 @@ export class UserProvider {
 
   getUserById(id: string): Observable<User> {
 
-    console.log('getUserById');
-
     const userUrl = `${config.apiUrl}/users/${id}`;
     
     return this.http.get<User>(userUrl).pipe(
+      map(user => {
+        console.log(user);
+        return user;
+      })
+    );
+  }
+
+  createUser(user: NewUser): Observable<User> {
+
+    const userUrl = `${config.apiUrl}/users`;
+    
+    return this.http.post<User>(userUrl, user).pipe(
       map(user => {
         console.log(user);
         return user;

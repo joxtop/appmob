@@ -1,8 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { NavController } from 'ionic-angular';
 
 import { AuthRequest } from '../../models/auth-request';
 import { AuthProvider } from '../../providers/auth/auth';
+import { RegisterPage } from '../register/register';
+
 
 /**
  * Login page.
@@ -33,7 +36,7 @@ export class LoginPage {
   @ViewChild(NgForm)
   form: NgForm;
 
-  constructor(private auth: AuthProvider) {
+  constructor(private auth: AuthProvider, public navCtrl: NavController) {
     this.authRequest = new AuthRequest();
   }
 
@@ -58,5 +61,9 @@ export class LoginPage {
       this.loginError = true;
       console.warn(`Authentication failed: ${err.message}`);
     });
+  }
+
+  goToRegister() {
+    this.navCtrl.push(RegisterPage);
   }
 }

@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar showCancelButton (ionInput)="onInput($event)" (ionCancel)="onCancel($event)" disabled="{{!filteredIssues}}"></ion-searchbar>
+  <ion-searchbar showCancelButton (ionInput)="onInput($event)" (ionCancel)="onCancel($event)" disabled="{{!filteredIssues}}" placeholder="Rechercher..."></ion-searchbar>
   <ion-spinner *ngIf="!filteredIssues"></ion-spinner>
   <ion-list *ngIf="filteredIssues">
     <button ion-item *ngFor='let issue of filteredIssues' (click)='goToDetails(issue.id)'>
@@ -26,4 +26,8 @@
       <ion-icon name="person"></ion-icon> {{ issue.creator.firstname }} {{ issue.creator.lastname }}</p>
     </button>
   </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="page < totalPage">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

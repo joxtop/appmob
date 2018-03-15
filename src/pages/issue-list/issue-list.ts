@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { IssueProvider } from '../../providers/issue/issue';
 import { Issue } from '../../models/issue';
 import { DetailsPage } from '../details/details';
+import { User } from '../../models/user';
 
 /**
  * Generated class for the IssueListPage page.
@@ -19,6 +20,8 @@ import { DetailsPage } from '../details/details';
 export class IssueListPage {
 
 
+  page: number;
+  totalPage: number;
   issues: Issue[];
   filteredIssues: Issue[];
   loadState;
@@ -30,6 +33,8 @@ export class IssueListPage {
     private issueService: IssueProvider
   ) {
     this.loadState = issueService.loadIssueState;
+    this.page = 1;
+    this.totalPage = 2;
   }
 
   ionViewDidLoad() {
@@ -55,12 +60,13 @@ export class IssueListPage {
 
   private loadIssues(search?: string) {
     let searchedValue = search ? search : undefined;
-    this.issueService.getIssues(['creator'], searchedValue, ['createdAt']).subscribe(issues => {
+    this.issueService.getIssues(['creator'], searchedValue, ['-createdAt']).subscribe(issues => {
       if(this.navParams.data.user) {
-        issues = issues.filter((issue) => issue.creator.name == this.navParams.data.user.name);
+        this.issues = this.filterByCreator(this.navParams.data.user, issues);
+      } else {
+        this.issues = issues;
       }
-      this.issues = issues;
-      this.filteredIssues = issues;
+      this.filteredIssues = this.issues;
     });
   }
 
@@ -68,9 +74,28 @@ export class IssueListPage {
     this.filteredIssues = this.issues.filter((issue) => issue.description.toLowerCase().indexOf(input.toLowerCase())!==-1);
   }
 
+  private filterByCreator(creator: User, issues: Issue[]): Issue[] {
+    return issues.filter((issue) => issue.creator.name == creator.name);
+  }
+
   goToDetails(id: string) {
     this.navCtrl.push(DetailsPage, {
       id: id
+    });
+  }
+
+  doInfinite(infiniteScroll) {
+    this.page = this.page+1;
+    this.issueService.getIssues(['creator'], undefined, ['-createdAt'], this.page).subscribe((newIssues) =>  {
+      if(newIssues.length==20) this.totalPage++;
+      if(this.navParams.data.user) {
+        this.issues = this.issues.concat(this.filterByCreator(this.navParams.data.user, newIssues));
+      } else {
+        this.issues = this.issues.concat(newIssues);
+      }
+      this.filteredIssues = this.issues;
+      console.log(this.filteredIssues);
+      infiniteScroll.complete();
     });
   }
 
