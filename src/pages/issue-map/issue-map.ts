@@ -44,23 +44,12 @@ export class IssueMapPage {
         tileLayer(tileLayerUrl, tileLayerOptions)
       ],
       zoom: 14,
-      //center: latLng(46.778186, 6.641524)
+      center: latLng(46.778186, 6.641524)
     };
     this.mapMarkers = [];
   }
-  presentLoadingDefault() {
-    let loading = this.loadingCtrl.create({
-      spinner: 'hide',
-      content: `
-        <div class="custom-spinner-container">
-          <div class="custom-spinner-box"></div>
-        </div>`,
-    });
-    loading.present();
-  }
 
   ionViewDidLoad() {
-    this.presentLoadingDefault;
     console.log('ionViewDidLoad IssueMapPage');
     this.loadIssues();
   }
@@ -70,7 +59,7 @@ export class IssueMapPage {
     this.issueService.getIssues(['creator'], searchedValue, ['createdAt']).subscribe(issues => {
       this.issues = issues;
       issues.forEach((issue) => {
-        this.mapMarkers.push(marker([issue.location.coordinates[1], issue.location.coordinates[1]]).bindTooltip(issue.description));
+        this.mapMarkers.push(marker([issue.location.coordinates[1], issue.location.coordinates[0]]).bindTooltip(issue.description));
       });
       console.log(this.mapMarkers);
     });
