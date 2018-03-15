@@ -1,7 +1,8 @@
 <ion-list *ngIf="comments?.length>0">
-  <h2>Commentaires</h2>
-  <ion-item *ngFor="let comment of comments">
-    <ion-icon item-start name="text"></ion-icon>
+  <ion-item *ngFor="let comment of comments" no-lines>
+    <ion-avatar item-start>
+      <img src="assets/imgs/empty-profile.png">
+    </ion-avatar>
     <h2>{{ comment.author.firstname }} {{ comment.author.lastname }}</h2>
     <h3>{{ comment.createdAt | date:'dd.MM.yyyy HH:mm' }}</h3>
     <p>{{ comment.text }}</p>

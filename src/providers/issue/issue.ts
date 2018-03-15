@@ -191,4 +191,14 @@ export class IssueProvider {
     );
   }
 
+  createIssueComment(issueId: string, newComment: IssueComment): Observable<IssueComment> {
+    const newIssueCommentUrl = `${config.apiUrl}/issues/${issueId}/comments`;
+
+    return this.http.post<IssueComment>(newIssueCommentUrl, newComment).pipe(
+      map(comment => {
+        console.log(comment);
+        return comment;
+      })
+    );
+  }
 }

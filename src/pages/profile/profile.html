@@ -29,5 +29,9 @@
         <ion-col>Nom</ion-col>
         <ion-col>{{ profile.lastname }}</ion-col>
       </ion-row>
+      <ion-row *ngIf="profile.phone">
+        <ion-col>Téléphone</ion-col>
+        <ion-col>{{ profile.phone }}</ion-col>
+      </ion-row>
   </ion-grid>
 </ion-content>
