@@ -58,6 +58,7 @@ export class IssueCommentForm {
     this.issueService.createIssueComment(this.issue.id, this.newComment).subscribe(newComment => {
       console.log(newComment);
       this.events.publish('comment:created');
+      this.commentForm.reset();
     }, err => {
       console.warn(`Could not create the comment: ${err.message}`);
     });
