@@ -15,7 +15,11 @@
 
 
 <ion-content padding>
+<<<<<<< HEAD
+  <div *ngIf="mapOptions.center" class='map' leaflet [leafletOptions]='mapOptions' [leafletLayers]='mapMarkers' (leafletMapReady)='onMapReady($event)'></div>
+=======
   <div *ngIf="mapMarkers.length>0" class="map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"></div>
+>>>>>>> 819792f21b1e7cca9ab8393a2270e82710441bbf
 </ion-content>
 
 <ion-footer>

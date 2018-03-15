@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { latLng, MapOptions, marker, Marker, tileLayer } from 'leaflet';
 
-import { CreateIssuePage } from '../create-issue/create-issue';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
+
+import {CreateIssuePage} from '../create-issue/create-issue';
+import { latLng, MapOptions, marker, Marker, Map, tileLayer } from 'leaflet';
+
 import { IssueProvider } from '../../providers/issue/issue';
 import { Issue } from '../../models/issue';
 
@@ -19,10 +22,12 @@ import { Issue } from '../../models/issue';
   templateUrl: 'issue-map.html',
 })
 export class IssueMapPage {
+  loadingCtrl: any;
   issues: Issue[];
   mapOptions: MapOptions;
-
   mapMarkers: Marker[];
+  userMarker: Marker;
+  map: Map;
 
   constructor(
     public navCtrl: NavController, 
@@ -32,17 +37,30 @@ export class IssueMapPage {
   ) {
     const tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tileLayerOptions = { maxZoom: 18 };
+  
+  
     this.mapOptions = {
       layers: [
         tileLayer(tileLayerUrl, tileLayerOptions)
       ],
-      zoom: 13,
-      center: latLng(46.778186, 6.641524)
+      zoom: 14,
+      //center: latLng(46.778186, 6.641524)
     };
     this.mapMarkers = [];
   }
+  presentLoadingDefault() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: `
+        <div class="custom-spinner-container">
+          <div class="custom-spinner-box"></div>
+        </div>`,
+    });
+    loading.present();
+  }
 
   ionViewDidLoad() {
+    this.presentLoadingDefault;
     console.log('ionViewDidLoad IssueMapPage');
     this.loadIssues();
   }
@@ -57,8 +75,8 @@ export class IssueMapPage {
       console.log(this.mapMarkers);
     });
   }
-
   openCreateIssuePage(){
     this.navCtrl.push(CreateIssuePage);
   }
+  
 }
