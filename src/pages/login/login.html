@@ -14,6 +14,8 @@
 
 
 <ion-content padding>
+  <!-- Error message displayed if the login failed -->
+  <p *ngIf="this.navParams.data?.info" ion-text class="info">{{ this.navParams.data.info }}</p>
   <form (submit)="onSubmit($event)">
     <ion-list>
 

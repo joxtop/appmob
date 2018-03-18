@@ -20,7 +20,7 @@
         <!-- Name input -->
         <ion-item>
           <ion-label floating>Nom d'utilisateur</ion-label>
-          <ion-input type="text" name="name" #nameInput="ngModel" [(ngModel)]="newUser.name" required max-length=25></ion-input>
+          <ion-input type="text" name="name" [(ngModel)]="newUser.name" required max-length=25 #nameInput="ngModel"></ion-input>
         </ion-item>
   
         <!-- Error message displayed if the name is invalid -->
@@ -31,7 +31,7 @@
         <!-- Password input -->
         <ion-item>
           <ion-label floating>Mot de passe</ion-label>
-          <ion-input type="password" name="password" #passwordInput="ngModel" [(ngModel)]="newUser.password" required minlength=4></ion-input>
+          <ion-input type="password" name="password" [(ngModel)]="newUser.password" required minlength=4 #passwordInput="ngModel"></ion-input>
         </ion-item>
 
         <!-- Error message displayed if the password is invalid -->
@@ -42,7 +42,7 @@
         <!-- Firstname input -->
         <ion-item>
           <ion-label floating>Prénom</ion-label>
-          <ion-input type="text" name="firstname" #firstnameInput="ngModel" [(ngModel)]="newUser.firstname" required minlength=2 maxlength=25></ion-input>
+          <ion-input type="text" name="firstname" [(ngModel)]="newUser.firstname" required minlength=2 maxlength=25 #firstnameInput="ngModel"></ion-input>
         </ion-item>
 
         <!-- Error message displayed if the firstname is invalid -->
@@ -53,7 +53,7 @@
         <!-- Lastname input -->
         <ion-item>
           <ion-label floating>Nom</ion-label>
-          <ion-input type="text" name="lastname" #lastnameInput="ngModel" [(ngModel)]="newUser.lastname" required minlength=2 maxlength=25></ion-input>
+          <ion-input type="text" name="lastname" [(ngModel)]="newUser.lastname" required minlength=2 maxlength=25 #lastnameInput="ngModel"></ion-input>
         </ion-item>
 
         <!-- Error message displayed if the lastname is invalid -->
@@ -78,6 +78,9 @@
   
         <!-- Submit button -->
         <button type="submit" [disabled]="registerForm.invalid" ion-button block>S'enregistrer</button>
+
+        <!-- Error message displayed if the registration failed -->
+        <p *ngIf="subscribeError" ion-text color="danger">Erreur lors de l'enregistrement. Il se peut que ce nom d'utilisateur existe déjà.</p>
   
       </div>
     </form>

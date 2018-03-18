@@ -30,6 +30,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { PictureProvider } from '../providers/picture/picture';
 import { IssueComments } from '../pages/issue-comments/issue-comments';
 import { RegisterPage } from '../pages/register/register';
+import { TutoPage } from '../pages/tuto/tuto';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { RegisterPage } from '../pages/register/register';
     DetailsPage,
     ProfilePage,
     IssueComments,
-    RegisterPage
+    RegisterPage,
+    TutoPage
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,8 @@ import { RegisterPage } from '../pages/register/register';
     DetailsPage,
     ProfilePage,
     IssueComments,
-    RegisterPage
+    RegisterPage,
+    TutoPage
   ],
   providers: [
     StatusBar,

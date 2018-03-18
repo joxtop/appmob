@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { AuthRequest } from '../../models/auth-request';
 import { AuthProvider } from '../../providers/auth/auth';
@@ -36,7 +36,7 @@ export class LoginPage {
   @ViewChild(NgForm)
   form: NgForm;
 
-  constructor(private auth: AuthProvider, public navCtrl: NavController) {
+  constructor(private auth: AuthProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.authRequest = new AuthRequest();
   }
 
