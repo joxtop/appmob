@@ -4,7 +4,7 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 
 import {CreateIssuePage} from '../create-issue/create-issue';
-import { latLng, MapOptions, marker, Marker, Map, tileLayer } from 'leaflet';
+import { LatLng, latLng, MapOptions, marker, Marker, Map, tileLayer } from 'leaflet';
 
 import { IssueProvider } from '../../providers/issue/issue';
 import { Issue } from '../../models/issue';
@@ -22,7 +22,7 @@ import { Issue } from '../../models/issue';
   templateUrl: 'issue-map.html',
 })
 export class IssueMapPage {
-  loadingCtrl: any;
+
   issues: Issue[];
   mapOptions: MapOptions;
   mapMarkers: Marker[];
@@ -56,6 +56,8 @@ export class IssueMapPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad IssueMapPage');
     this.loadIssues();
+
+
   }
 
   private loadIssues(search?: string) {
@@ -68,8 +70,13 @@ export class IssueMapPage {
       console.log(this.mapMarkers);
     });
   }
+
   openCreateIssuePage(){
     this.navCtrl.push(CreateIssuePage);
+  }
+
+  onMapReady(map: Map){
+    this.map = map;
   }
   
 }

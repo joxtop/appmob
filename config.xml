@@ -86,7 +86,6 @@
     </plugin>
     <plugin name="cordova-plugin-nativegeocoder" spec="^3.1.1" />
     <plugin name="cordova-plugin-camera" spec="^4.0.2" />
-    <engine name="android" spec="7.0.0" />
     <allow-navigation href="http://10.192.115.195:8101" />
     <allow-navigation href="http://10.192.115.195:8100" />
     <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="^4.1.5" />
@@ -94,4 +93,6 @@
     <allow-navigation href="http://192.168.0.73:8101" />
     <allow-navigation href="http://192.168.1.146:8101" />
     <allow-navigation href="http://192.168.1.105:8101" />
+    <engine name="android" spec="7.0.0" />
+    <allow-navigation href="http://10.192.115.42:8101" />
 </widget>
