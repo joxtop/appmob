@@ -33,5 +33,13 @@
         <ion-col>Téléphone</ion-col>
         <ion-col>{{ profile.phone }}</ion-col>
       </ion-row>
+      <ion-row *ngIf="profile.roles.includes('staff')">
+        <ion-col>Droits</ion-col>
+        <ion-col>Administrateur</ion-col>
+      </ion-row>
+      <ion-row *ngIf="!profile.roles.includes('staff')">
+        <ion-col>Droits</ion-col>
+        <ion-col>Utilisateur standard</ion-col>
+      </ion-row>
   </ion-grid>
 </ion-content>

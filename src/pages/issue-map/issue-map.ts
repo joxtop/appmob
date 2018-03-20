@@ -32,20 +32,24 @@ export class IssueMapPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
-    private issueService: IssueProvider
-
+    private issueService: IssueProvider,
+    private geolocation: Geolocation,
   ) {
     const tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tileLayerOptions = { maxZoom: 18 };
   
-  
-    this.mapOptions = {
-      layers: [
-        tileLayer(tileLayerUrl, tileLayerOptions)
-      ],
-      zoom: 14,
-      center: latLng(46.778186, 6.641524)
-    };
+    this.geolocation.getCurrentPosition().then(position => {
+      console.log(`User is at ${position.coords.latitude}, ${position.coords.longitude}`);
+      this.mapOptions = {
+        layers: [
+          tileLayer(tileLayerUrl, tileLayerOptions)
+        ],
+        zoom: 13,
+        center: latLng(position.coords.latitude, position.coords.longitude)
+      };
+    }).catch(err => {
+      console.warn(`Could not retrieve user position because: ${err.message}`);
+    });
     this.mapMarkers = [];
   }
 

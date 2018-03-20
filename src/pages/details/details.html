@@ -15,6 +15,17 @@
 
 
 <ion-content>
+ <!-- this fab is placed at bottom right -->
+ <ion-fab top right *ngIf="issue?.state != 'resolved' && issue?.state != 'rejected' && profile?.roles.includes('staff')" #fab>
+  <button ion-fab><ion-icon name="create"></ion-icon></button>
+    <ion-fab-list side="bottom" *ngIf="issue?.state == 'new'">
+      <button ion-fab (click)="changeStatus('start', fab)"><ion-icon name="build"></ion-icon></button>
+      <button ion-fab (click)="changeStatus('reject', fab)"><ion-icon name="trash"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="bottom" *ngIf="issue?.state == 'inProgress'">
+      <button ion-fab (click)="changeStatus('resolve', fab)"><ion-icon name="checkmark-circle-outline"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
   <ion-spinner *ngIf="!issue"></ion-spinner>
   <ion-card *ngIf='issue'>
     <img *ngIf='issue.imageUrl' src="{{issue.imageUrl}}"/>

@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 import { NewIssue } from '../../models/new-issue';
 import { IssueType } from '../../models/issue-type';
 import { IssueComment } from '../../models/issue-comment';
+import { IssueAction } from '../../models/issue-action';
 
 /*
   Generated class for the IssueProvider provider.
@@ -103,16 +104,10 @@ export class IssueProvider {
           icon: 'trash'
         };
         break;
-      case 'canceled':
-        state = {
-          name: 'Supprimé',
-          icon: 'close-circle'
-        };
-        break;
-      case 'completed':
+      case 'resolved':
         state = {
           name: 'Résolu',
-          icon: 'checkmark-circle'
+          icon: 'checkmark-circle-outline'
         };
         break;
     }
@@ -198,6 +193,17 @@ export class IssueProvider {
       map(comment => {
         console.log(comment);
         return comment;
+      })
+    );
+  }
+
+  addIssueAction(issueId: string, issueAction: IssueAction): Observable<any> {
+    const editIssueUrl = `${config.apiUrl}/issues/${issueId}/actions`;
+    
+    return this.http.post<any>(editIssueUrl, issueAction).pipe(
+      map(issue => {
+        console.log(issue);
+        return issue;
       })
     );
   }

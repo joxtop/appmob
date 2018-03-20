@@ -3,7 +3,8 @@ import {
 } from '@angular/core';
 import {
   NavController,
-  NavParams
+  NavParams,
+  FabContainer
 } from 'ionic-angular';
 
 import {
@@ -21,6 +22,8 @@ import {
 import {
   ProfilePage
 } from '../profile/profile';
+import { AuthProvider } from '../../providers/auth/auth';
+import { IssueAction } from '../../models/issue-action';
 
 /**
  * Generated class for the DetailsPage page.
@@ -35,6 +38,7 @@ import {
 })
 export class DetailsPage {
 
+  profile: User;
   issue: Issue;
   issueAddress: string;
   loadState;
@@ -43,7 +47,8 @@ export class DetailsPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private issueService: IssueProvider
+    private issueService: IssueProvider,
+    private auth: AuthProvider,
   ) {
     this.loadState = issueService.loadIssueState;
     this.startMap = issueService.startExternalMap;
@@ -51,6 +56,10 @@ export class DetailsPage {
 
   ionViewDidLoad() {
     this.loadIssueDetails(this.navParams.data.id);
+
+    this.auth.getUser().subscribe((user) => {
+      this.profile = user;
+    });
   }
 
   private loadIssueDetails(id: string) {
@@ -67,6 +76,31 @@ export class DetailsPage {
   goToUser(user: User) {
     this.navCtrl.push(ProfilePage, {
       user: user
+    });
+  }
+
+  changeStatus(newStatus: string, fab: FabContainer) {
+    fab.close();
+    console.log("New status", newStatus);
+    let issueAction = new IssueAction();
+    issueAction.reason = `ìssue ${newStatus}`;
+    issueAction.type = newStatus;
+    console.log('issueAction', issueAction);
+    this.issueService.addIssueAction(this.issue.id, issueAction).subscribe(issue => {
+      console.log('change issue status', issue);
+      switch (issue.type) {
+        case 'start':
+          this.issue.state = 'inProgress';
+          break;
+        case 'reject':
+          this.issue.state = 'rejected';
+          break;
+        case 'resolve':
+          this.issue.state = 'resolved';
+          break;
+      }
+    }, (err) => {
+      console.warn("Couldn't change the issue status", err);
     });
   }
 }

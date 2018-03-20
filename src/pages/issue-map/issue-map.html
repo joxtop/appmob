@@ -15,7 +15,11 @@
 
 
 <ion-content padding>
-  <div *ngIf="mapMarkers.length>0" class="map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"></div>
+  <div *ngIf="!mapOptions">
+    <ion-spinner></ion-spinner>
+    <p text-center>Géolocalisation en cours...</p>
+  </div>
+  <div *ngIf="mapOptions" class="map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"></div>
 </ion-content>
 
 <ion-footer>
