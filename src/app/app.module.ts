@@ -5,7 +5,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
-
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
@@ -19,7 +18,6 @@ import { AuthProvider } from '../providers/auth/auth';
 import { AuthInterceptorProvider } from '../providers/auth-interceptor/auth-interceptor';
 import { UserProvider } from '../providers/user/user';
 import { IssueProvider } from '../providers/issue/issue';
-
 import { HomePage } from '../pages/home/home';
 import { CreateIssuePage } from '../pages/create-issue/create-issue';
 import { IssueListPage } from '../pages/issue-list/issue-list';
@@ -32,7 +30,6 @@ import { IssueComments } from '../pages/issue-comments/issue-comments';
 import { RegisterPage } from '../pages/register/register';
 import { TutoPage } from '../pages/tuto/tuto';
 import { IssueCommentForm } from '../pages/issue-comment-form/issue-comment-form';
-
 
 @NgModule({
   declarations: [
@@ -78,7 +75,6 @@ import { IssueCommentForm } from '../pages/issue-comment-form/issue-comment-form
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorProvider, multi: true },
     UserProvider,
     IssueProvider,

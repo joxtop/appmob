@@ -38,10 +38,6 @@ export class IssueCommentForm {
     this.subscribeError = false;
   }
 
-  ngOnInit() {
-    console.log('ngOnInit IssueCommentForm');
-  }
-
   onCommentSubmit($event) {
     // Prevent default HTML form behavior.
     $event.preventDefault();
@@ -53,10 +49,7 @@ export class IssueCommentForm {
 
     this.subscribeError = false;
 
-    console.log(this.newComment);
-
     this.issueService.createIssueComment(this.issue.id, this.newComment).subscribe(newComment => {
-      console.log(newComment);
       this.events.publish('comment:created');
       this.commentForm.reset();
     }, err => {

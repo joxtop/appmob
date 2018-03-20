@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { AuthProvider } from '../../providers/auth/auth';
 import { User } from '../../models/user';
 
 /**
@@ -25,8 +24,7 @@ export class ProfilePage {
 
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams,
-    private auth: AuthProvider
+    public navParams: NavParams
   ) {}
 
   ionViewDidLoad() {  

@@ -1,33 +1,12 @@
-import {
-  Component
-} from '@angular/core';
-import {
-  NavController,
-  NavParams
-} from 'ionic-angular';
-import {
-  Geolocation
-} from '@ionic-native/geolocation';
-
-import {
-  AuthProvider
-} from '../../providers/auth/auth';
-import {
-  NewIssue
-} from '../../models/new-issue';
-import {
-  IssueProvider
-} from '../../providers/issue/issue';
-import {
-  IssueType
-} from '../../models/issue-type';
-import {
-  QimgImage
-} from '../../models/qimg-image';
-import {
-  PictureProvider
-} from '../../providers/picture/picture';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { NavController, NavParams } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
+
+import { NewIssue } from '../../models/new-issue';
+import { IssueProvider } from '../../providers/issue/issue';
+import { IssueType } from '../../models/issue-type';
+import { PictureProvider } from '../../providers/picture/picture';
 import { DetailsPage } from '../details/details';
 
 /**
@@ -48,7 +27,6 @@ export class CreateIssuePage {
   issueTypes: IssueType[];
 
   constructor(
-    private auth: AuthProvider,
     public navCtrl: NavController,
     public navParams: NavParams,
     private geolocation: Geolocation,
@@ -70,7 +48,6 @@ export class CreateIssuePage {
   ionViewDidLoad() {
     this.issueService.getIssueTypes().subscribe(issueTypes => {
       this.issueTypes = issueTypes;
-      console.log(issueTypes);
     });
 
     const geolocationPromise = this.geolocation.getCurrentPosition();

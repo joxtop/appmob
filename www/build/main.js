@@ -7,8 +7,8 @@ webpackJsonp([0],{
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__profile_profile__ = __webpack_require__(161);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__issue_list_issue_list__ = __webpack_require__(361);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__issue_map_issue_map__ = __webpack_require__(362);
@@ -37,6 +37,12 @@ var HomePage = (function () {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.storage = storage;
+        // If the tuto is not yet done, redirect the user to the tuto page
+        this.storage.get('tuto-done').then(function (done) {
+            if (!done) {
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__tuto_tuto__["a" /* TutoPage */]);
+            }
+        });
         // set the root page
         this.rootPage = __WEBPACK_IMPORTED_MODULE_6__issue_map_issue_map__["a" /* IssueMapPage */];
         this.auth.getUser().subscribe(function (user) {
@@ -49,20 +55,10 @@ var HomePage = (function () {
             ];
         });
     }
-    HomePage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.storage.get('tuto-done').then(function (done) {
-            if (!done) {
-                _this.storage.set('tuto-done', true);
-                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__tuto_tuto__["a" /* TutoPage */]);
-            }
-        });
-    };
     HomePage.prototype.logOut = function () {
         this.auth.logOut();
     };
     HomePage.prototype.openPage = function (page) {
-        console.log(page);
         this.navCtrl.push(page.component, {
             user: page.user,
             title: page.title
@@ -70,7 +66,7 @@ var HomePage = (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/Carla/Desktop/WebServ/appmob/src/pages/home/home.html"*/'<ion-menu [content]="mycontent">\n  <ion-content>\n    <ion-list>\n      <button *ngFor="let page of pages" ion-item (click)="openPage(page)">\n        {{page.title}}\n      </button>\n\n      <!-- Logout button -->\n      <ion-buttons end>\n        <button ion-button icon-only (click)="logOut()">\n          <ion-icon name="log-out"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-list>\n  </ion-content>\n</ion-menu>\n\n<ion-nav #mycontent [root]="rootPage"></ion-nav>'/*ion-inline-end:"/Users/Carla/Desktop/WebServ/appmob/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\home\home.html"*/'<ion-menu [content]="mycontent">\n\n  <ion-content>\n\n    <ion-list>\n\n      <button *ngFor="let page of pages" ion-item (click)="openPage(page)">\n\n        {{page.title}}\n\n      </button>\n\n\n\n      <!-- Logout button -->\n\n      <ion-buttons end>\n\n        <button ion-button icon-only (click)="logOut()">\n\n          <ion-icon name="log-out"></ion-icon>\n\n        </button>\n\n      </ion-buttons>\n\n    </ion-list>\n\n  </ion-content>\n\n</ion-menu>\n\n\n\n<ion-nav #mycontent [root]="rootPage"></ion-nav>'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\home\home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* AuthProvider */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
@@ -91,7 +87,6 @@ var HomePage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfilePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth__ = __webpack_require__(38);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -103,7 +98,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
 /**
  * Generated class for the ProfilePage page.
  *
@@ -111,10 +105,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var ProfilePage = (function () {
-    function ProfilePage(navCtrl, navParams, auth) {
+    function ProfilePage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.auth = auth;
     }
     ProfilePage.prototype.ionViewDidLoad = function () {
         this.profile = this.navParams.data.user;
@@ -135,11 +128,10 @@ var ProfilePage = (function () {
     };
     ProfilePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-profile',template:/*ion-inline-start:"/Users/Carla/Desktop/WebServ/appmob/src/pages/profile/profile.html"*/'<!--\n  Generated template for the ProfilePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title *ngIf="!profile">Loading...</ion-title>\n    <ion-title *ngIf="profile">{{ profile.firstname }} {{ profile.lastname }}</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding *ngIf="profile">\n  <img src="assets/imgs/empty-profile.png" id="profileImage">\n  <ion-grid>\n      <ion-row>\n        <ion-col>Nom d\'utilisateur</ion-col>\n        <ion-col>{{ profile.name }}</ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col>Prénom</ion-col>\n        <ion-col>{{ profile.firstname }}</ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col>Nom</ion-col>\n        <ion-col>{{ profile.lastname }}</ion-col>\n      </ion-row>\n      <ion-row *ngIf="profile.phone">\n        <ion-col>Téléphone</ion-col>\n        <ion-col>{{ profile.phone }}</ion-col>\n      </ion-row>\n      <ion-row *ngIf="profile.roles.includes(\'staff\')">\n        <ion-col>Droits</ion-col>\n        <ion-col>Administrateur</ion-col>\n      </ion-row>\n      <ion-row *ngIf="!profile.roles.includes(\'staff\')">\n        <ion-col>Droits</ion-col>\n        <ion-col>Utilisateur standard</ion-col>\n      </ion-row>\n  </ion-grid>\n</ion-content>\n'/*ion-inline-end:"/Users/Carla/Desktop/WebServ/appmob/src/pages/profile/profile.html"*/,
+            selector: 'page-profile',template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\profile\profile.html"*/'<!--\n  Generated template for the ProfilePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title *ngIf="!profile">Loading...</ion-title>\n    <ion-title *ngIf="profile">{{ profile.firstname }} {{ profile.lastname }}</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding *ngIf="profile">\n  <img src="assets/imgs/empty-profile.png" id="profileImage">\n  <ion-grid>\n      <ion-row>\n        <ion-col>Nom d\'utilisateur</ion-col>\n        <ion-col>{{ profile.name }}</ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col>Prénom</ion-col>\n        <ion-col>{{ profile.firstname }}</ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col>Nom</ion-col>\n        <ion-col>{{ profile.lastname }}</ion-col>\n      </ion-row>\n      <ion-row *ngIf="profile.phone">\n        <ion-col>Téléphone</ion-col>\n        <ion-col>{{ profile.phone }}</ion-col>\n      </ion-row>\n      <ion-row *ngIf="profile.roles.includes(\'staff\')">\n        <ion-col>Droits</ion-col>\n        <ion-col>Administrateur</ion-col>\n      </ion-row>\n      <ion-row *ngIf="!profile.roles.includes(\'staff\')">\n        <ion-col>Droits</ion-col>\n        <ion-col>Utilisateur standard</ion-col>\n      </ion-row>\n  </ion-grid>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\profile\profile.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth__["a" /* AuthProvider */]])
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */]])
     ], ProfilePage);
     return ProfilePage;
 }());
@@ -155,9 +147,9 @@ var ProfilePage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DetailsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_issue_issue__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_issue_issue__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__profile_profile__ = __webpack_require__(161);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_issue_action__ = __webpack_require__(711);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -215,13 +207,10 @@ var DetailsPage = (function () {
     DetailsPage.prototype.changeStatus = function (newStatus, fab) {
         var _this = this;
         fab.close();
-        console.log("New status", newStatus);
         var issueAction = new __WEBPACK_IMPORTED_MODULE_5__models_issue_action__["a" /* IssueAction */]();
         issueAction.reason = "\u00ECssue " + newStatus;
         issueAction.type = newStatus;
-        console.log('issueAction', issueAction);
         this.issueService.addIssueAction(this.issue.id, issueAction).subscribe(function (issue) {
-            console.log('change issue status', issue);
             switch (issue.type) {
                 case 'start':
                     _this.issue.state = 'inProgress';
@@ -239,7 +228,7 @@ var DetailsPage = (function () {
     };
     DetailsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-details',template:/*ion-inline-start:"/Users/Carla/Desktop/WebServ/appmob/src/pages/details/details.html"*/'<!--\n  Generated template for the DetailsPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title *ngIf="!issue">Chargement...</ion-title>\n    <ion-title *ngIf="issue">{{ issue.description }}</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n <!-- this fab is placed at bottom right -->\n <ion-fab top right *ngIf="issue?.state != \'resolved\' && issue?.state != \'rejected\' && profile?.roles.includes(\'staff\')" #fab>\n  <button ion-fab><ion-icon name="create"></ion-icon></button>\n    <ion-fab-list side="bottom" *ngIf="issue?.state == \'new\'">\n      <button ion-fab (click)="changeStatus(\'start\', fab)"><ion-icon name="build"></ion-icon></button>\n      <button ion-fab (click)="changeStatus(\'reject\', fab)"><ion-icon name="trash"></ion-icon></button>\n    </ion-fab-list>\n    <ion-fab-list side="bottom" *ngIf="issue?.state == \'inProgress\'">\n      <button ion-fab (click)="changeStatus(\'resolve\', fab)"><ion-icon name="checkmark-circle-outline"></ion-icon></button>\n    </ion-fab-list>\n  </ion-fab>\n  <ion-spinner *ngIf="!issue"></ion-spinner>\n  <ion-card *ngIf=\'issue\'>\n    <img *ngIf=\'issue.imageUrl\' src="{{issue.imageUrl}}"/>\n    <img *ngIf=\'!issue.imageUrl\' src="assets/imgs/placeholder.png"/>\n    <ion-card-content>\n      <ion-card-title class="truncate" >{{ issue.description }}</ion-card-title>\n      <p>{{ issue.description }}</p>\n      <ion-row class="vertical-align-content">\n        <ion-col>\n          <button ion-button icon-left clear small (click)=\'startMap(issue.location.coordinates[1], issue.location.coordinates[0])\'>\n            <ion-icon name="pin"></ion-icon>\n            <div *ngIf=\'issueAddress\'>{{ issueAddress }}</div>\n          </button>\n        </ion-col>\n        <ion-col>\n          <div><ion-icon [name]="loadState(issue)?.icon"></ion-icon> {{ loadState(issue)?.name }}</div>\n        </ion-col>\n      </ion-row>\n      <ion-row class="vertical-align-content">\n        <ion-col>\n          <button ion-button icon-left clear small (click)=\'goToUser(issue.creator)\'>\n            <ion-icon name="person"></ion-icon>\n            <div>{{ issue.creator.firstname }} {{ issue.creator.lastname }}</div>\n          </button>\n        </ion-col>\n        <ion-col>\n          <div><ion-icon name="md-calendar"></ion-icon> {{ issue.createdAt | date:\'dd.MM.yyyy HH:mm\' }}</div>\n        </ion-col>\n      </ion-row>\n      <issue-comment-form [issue]="issue"></issue-comment-form>\n    </ion-card-content>\n  </ion-card>\n</ion-content>'/*ion-inline-end:"/Users/Carla/Desktop/WebServ/appmob/src/pages/details/details.html"*/,
+            selector: 'page-details',template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\details\details.html"*/'<!--\n\n  Generated template for the DetailsPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title *ngIf="!issue">Chargement...</ion-title>\n\n    <ion-title *ngIf="issue">{{ issue.description }}</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n <!-- this fab is placed at bottom right -->\n\n <ion-fab top right *ngIf="issue?.state != \'resolved\' && issue?.state != \'rejected\' && profile?.roles.includes(\'staff\')" #fab>\n\n  <button ion-fab><ion-icon name="create"></ion-icon></button>\n\n    <ion-fab-list side="bottom" *ngIf="issue?.state == \'new\'">\n\n      <button ion-fab (click)="changeStatus(\'start\', fab)"><ion-icon name="build"></ion-icon></button>\n\n      <button ion-fab (click)="changeStatus(\'reject\', fab)"><ion-icon name="trash"></ion-icon></button>\n\n    </ion-fab-list>\n\n    <ion-fab-list side="bottom" *ngIf="issue?.state == \'inProgress\'">\n\n      <button ion-fab (click)="changeStatus(\'resolve\', fab)"><ion-icon name="checkmark-circle-outline"></ion-icon></button>\n\n    </ion-fab-list>\n\n  </ion-fab>\n\n  <ion-spinner *ngIf="!issue"></ion-spinner>\n\n  <ion-card *ngIf=\'issue\'>\n\n    <img *ngIf=\'issue.imageUrl\' src="{{issue.imageUrl}}"/>\n\n    <img *ngIf=\'!issue.imageUrl\' src="assets/imgs/placeholder.png"/>\n\n    <ion-card-content>\n\n      <ion-card-title class="truncate" >{{ issue.description }}</ion-card-title>\n\n      <p>{{ issue.description }}</p>\n\n      <ion-row class="vertical-align-content">\n\n        <ion-col>\n\n          <button ion-button icon-left clear small (click)=\'startMap(issue.location.coordinates[1], issue.location.coordinates[0])\'>\n\n            <ion-icon name="pin"></ion-icon>\n\n            <div *ngIf=\'issueAddress\'>{{ issueAddress }}</div>\n\n          </button>\n\n        </ion-col>\n\n        <ion-col>\n\n          <div><ion-icon [name]="loadState(issue)?.icon"></ion-icon> {{ loadState(issue)?.name }}</div>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row class="vertical-align-content">\n\n        <ion-col>\n\n          <button ion-button icon-left clear small (click)=\'goToUser(issue.creator)\'>\n\n            <ion-icon name="person"></ion-icon>\n\n            <div>{{ issue.creator.firstname }} {{ issue.creator.lastname }}</div>\n\n          </button>\n\n        </ion-col>\n\n        <ion-col>\n\n          <div><ion-icon name="md-calendar"></ion-icon> {{ issue.createdAt | date:\'dd.MM.yyyy HH:mm\' }}</div>\n\n        </ion-col>\n\n      </ion-row>\n\n      <issue-comment-form [issue]="issue"></issue-comment-form>\n\n    </ion-card-content>\n\n  </ion-card>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\details\details.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
@@ -262,7 +251,7 @@ var DetailsPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_auth_request__ = __webpack_require__(712);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__register_register__ = __webpack_require__(366);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -319,7 +308,7 @@ var LoginPage = (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* NgForm */])
     ], LoginPage.prototype, "form", void 0);
     LoginPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/Carla/Desktop/WebServ/appmob/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Connexion</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <!-- Error message displayed if the login failed -->\n  <p *ngIf="this.navParams.data?.info" ion-text class="info">{{ this.navParams.data.info }}</p>\n  <form (submit)="onSubmit($event)">\n    <ion-list>\n\n      <!-- Name input -->\n      <ion-item>\n        <ion-label floating>Nom d\'utilisateur</ion-label>\n        <ion-input type="text" name="name" #nameInput="ngModel" [(ngModel)]="authRequest.name" required></ion-input>\n      </ion-item>\n\n      <!-- Error message displayed if the name is invalid -->\n      <ion-item *ngIf="nameInput.invalid && nameInput.dirty" no-lines>\n        <p ion-text color="danger">Le nom d\'utilisateur est requis.</p>\n      </ion-item>\n\n      <!-- Password input -->\n      <ion-item>\n        <ion-label floating>Mot de passe</ion-label>\n        <ion-input type="password" name="password" #passwordInput="ngModel" [(ngModel)]="authRequest.password" required></ion-input>\n      </ion-item>\n\n      <!-- Error message displayed if the password is invalid -->\n      <ion-item *ngIf="passwordInput.invalid && passwordInput.dirty" no-lines>\n        <p ion-text color="danger">Le mot de passe est requis.</p>\n      </ion-item>\n\n    </ion-list>\n\n    <div padding>\n\n      <!-- Submit button -->\n      <button type="submit" [disabled]="form.invalid" ion-button block>Se connecter</button>\n\n      <!-- Error message displayed if the login failed -->\n      <p *ngIf="loginError" ion-text color="danger">Nom d\'utilisateur ou mot de passe invalide.</p>\n\n      <p>Vous n\'êtes pas encore inscrit ? <a (click)="goToRegister()">Inscrivez-vous maintenant</a></p>\n    </div>\n  </form>\n</ion-content>\n'/*ion-inline-end:"/Users/Carla/Desktop/WebServ/appmob/src/pages/login/login.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\login\login.html"*/'<!--\n\n  Generated template for the LoginPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Connexion</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <!-- Error message displayed if the login failed -->\n\n  <p *ngIf="this.navParams.data?.info" ion-text class="info">{{ this.navParams.data.info }}</p>\n\n  <form (submit)="onSubmit($event)">\n\n    <ion-list>\n\n\n\n      <!-- Name input -->\n\n      <ion-item>\n\n        <ion-label floating>Nom d\'utilisateur</ion-label>\n\n        <ion-input type="text" name="name" #nameInput="ngModel" [(ngModel)]="authRequest.name" required></ion-input>\n\n      </ion-item>\n\n\n\n      <!-- Error message displayed if the name is invalid -->\n\n      <ion-item *ngIf="nameInput.invalid && nameInput.dirty" no-lines>\n\n        <p ion-text color="danger">Le nom d\'utilisateur est requis.</p>\n\n      </ion-item>\n\n\n\n      <!-- Password input -->\n\n      <ion-item>\n\n        <ion-label floating>Mot de passe</ion-label>\n\n        <ion-input type="password" name="password" #passwordInput="ngModel" [(ngModel)]="authRequest.password" required></ion-input>\n\n      </ion-item>\n\n\n\n      <!-- Error message displayed if the password is invalid -->\n\n      <ion-item *ngIf="passwordInput.invalid && passwordInput.dirty" no-lines>\n\n        <p ion-text color="danger">Le mot de passe est requis.</p>\n\n      </ion-item>\n\n\n\n    </ion-list>\n\n\n\n    <div padding>\n\n\n\n      <!-- Submit button -->\n\n      <button type="submit" [disabled]="form.invalid" ion-button block>Se connecter</button>\n\n\n\n      <!-- Error message displayed if the login failed -->\n\n      <p *ngIf="loginError" ion-text color="danger">Nom d\'utilisateur ou mot de passe invalide.</p>\n\n\n\n      <p>Vous n\'êtes pas encore inscrit ? <a (click)="goToRegister()">Inscrivez-vous maintenant</a></p>\n\n    </div>\n\n  </form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\login\login.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__["a" /* AuthProvider */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* NavParams */]])
     ], LoginPage);
@@ -371,7 +360,7 @@ webpackEmptyAsyncContext.id = 222;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return IssueListPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_issue_issue__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_issue_issue__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__details_details__ = __webpack_require__(162);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -456,13 +445,12 @@ var IssueListPage = (function () {
                 _this.issues = _this.issues.concat(newIssues);
             }
             _this.filteredIssues = _this.issues;
-            console.log(_this.filteredIssues);
             infiniteScroll.complete();
         });
     };
     IssueListPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-issue-list',template:/*ion-inline-start:"/Users/Carla/Desktop/WebServ/appmob/src/pages/issue-list/issue-list.html"*/'<!--\n  Generated template for the IssueListPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>{{ pageTitle }}</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content>\n  <ion-searchbar showCancelButton (ionInput)="onInput($event)" (ionCancel)="onCancel($event)" disabled="{{!filteredIssues}}" placeholder="Rechercher..."></ion-searchbar>\n  <ion-spinner *ngIf="!filteredIssues"></ion-spinner>\n  <ion-list *ngIf="filteredIssues">\n    <button ion-item *ngFor=\'let issue of filteredIssues\' (click)=\'goToDetails(issue.id)\'>\n      <ion-thumbnail item-start>\n        <img *ngIf=\'issue.imageUrl\' src="{{issue.imageUrl}}">\n        <img *ngIf=\'!issue.imageUrl\' src="assets/imgs/placeholder.png">\n      </ion-thumbnail>\n      <h2>{{issue.description}}</h2>\n      <p><ion-icon [name]="loadState(issue)?.icon"></ion-icon> {{loadState(issue)?.name}} • \n      <ion-icon name="person"></ion-icon> {{ issue.creator.firstname }} {{ issue.creator.lastname }}</p>\n    </button>\n  </ion-list>\n\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="page < totalPage">\n    <ion-infinite-scroll-content></ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n'/*ion-inline-end:"/Users/Carla/Desktop/WebServ/appmob/src/pages/issue-list/issue-list.html"*/,
+            selector: 'page-issue-list',template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\issue-list\issue-list.html"*/'<!--\n\n  Generated template for the IssueListPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>{{ pageTitle }}</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-searchbar showCancelButton (ionInput)="onInput($event)" (ionCancel)="onCancel($event)" disabled="{{!filteredIssues}}" placeholder="Rechercher..."></ion-searchbar>\n\n  <ion-spinner *ngIf="!filteredIssues"></ion-spinner>\n\n  <ion-list *ngIf="filteredIssues">\n\n    <button ion-item *ngFor=\'let issue of filteredIssues\' (click)=\'goToDetails(issue.id)\'>\n\n      <ion-thumbnail item-start>\n\n        <img *ngIf=\'issue.imageUrl\' src="{{issue.imageUrl}}">\n\n        <img *ngIf=\'!issue.imageUrl\' src="assets/imgs/placeholder.png">\n\n      </ion-thumbnail>\n\n      <h2>{{issue.description}}</h2>\n\n      <p><ion-icon [name]="loadState(issue)?.icon"></ion-icon> {{loadState(issue)?.name}} • \n\n      <ion-icon name="person"></ion-icon> {{ issue.creator.firstname }} {{ issue.creator.lastname }}</p>\n\n    </button>\n\n  </ion-list>\n\n\n\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="page < totalPage">\n\n    <ion-infinite-scroll-content></ion-infinite-scroll-content>\n\n  </ion-infinite-scroll>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\issue-list\issue-list.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
@@ -483,10 +471,10 @@ var IssueListPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__create_issue_create_issue__ = __webpack_require__(363);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_leaflet__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_leaflet___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_leaflet__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_issue_issue__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_leaflet__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_leaflet___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_leaflet__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__create_issue_create_issue__ = __webpack_require__(363);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_issue_issue__ = __webpack_require__(42);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -510,30 +498,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var IssueMapPage = (function () {
     function IssueMapPage(navCtrl, navParams, issueService, geolocation) {
-        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.issueService = issueService;
         this.geolocation = geolocation;
-        var tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        var tileLayerOptions = { maxZoom: 18 };
+        this.mapMarkers = [];
+    }
+    IssueMapPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.loadIssues();
         this.geolocation.getCurrentPosition().then(function (position) {
             console.log("User is at " + position.coords.latitude + ", " + position.coords.longitude);
+            var tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            var tileLayerOptions = { maxZoom: 18 };
             _this.mapOptions = {
                 layers: [
-                    Object(__WEBPACK_IMPORTED_MODULE_4_leaflet__["tileLayer"])(tileLayerUrl, tileLayerOptions)
+                    Object(__WEBPACK_IMPORTED_MODULE_3_leaflet__["tileLayer"])(tileLayerUrl, tileLayerOptions)
                 ],
                 zoom: 13,
-                center: Object(__WEBPACK_IMPORTED_MODULE_4_leaflet__["latLng"])(position.coords.latitude, position.coords.longitude)
+                center: Object(__WEBPACK_IMPORTED_MODULE_3_leaflet__["latLng"])(position.coords.latitude, position.coords.longitude)
             };
         }).catch(function (err) {
             console.warn("Could not retrieve user position because: " + err.message);
         });
-        this.mapMarkers = [];
-    }
-    IssueMapPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad IssueMapPage');
-        this.loadIssues();
     };
     IssueMapPage.prototype.loadIssues = function (search) {
         var _this = this;
@@ -541,20 +528,19 @@ var IssueMapPage = (function () {
         this.issueService.getIssues(['creator'], searchedValue, ['createdAt']).subscribe(function (issues) {
             _this.issues = issues;
             issues.forEach(function (issue) {
-                _this.mapMarkers.push(Object(__WEBPACK_IMPORTED_MODULE_4_leaflet__["marker"])([issue.location.coordinates[1], issue.location.coordinates[0]]).bindTooltip(issue.description));
+                _this.mapMarkers.push(Object(__WEBPACK_IMPORTED_MODULE_3_leaflet__["marker"])([issue.location.coordinates[1], issue.location.coordinates[0]]).bindTooltip(issue.description));
             });
-            console.log(_this.mapMarkers);
         });
     };
     IssueMapPage.prototype.openCreateIssuePage = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__create_issue_create_issue__["a" /* CreateIssuePage */]);
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__create_issue_create_issue__["a" /* CreateIssuePage */]);
     };
     IssueMapPage.prototype.onMapReady = function (map) {
         this.map = map;
     };
     IssueMapPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-issue-map',template:/*ion-inline-start:"/Users/Carla/Desktop/WebServ/appmob/src/pages/issue-map/issue-map.html"*/'<!--\n  Generated template for the IssueMapPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>\n    <ion-title>Citizen Engagement</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <div *ngIf="!mapOptions">\n    <ion-spinner></ion-spinner>\n    <p text-center>Géolocalisation en cours...</p>\n  </div>\n  <div *ngIf="mapOptions" class="map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"></div>\n</ion-content>\n\n<ion-footer>\n  <ion-toolbar>\n    <button ion-button color="dark" clear (click)="openCreateIssuePage()">\n      <ion-icon name="add-circle" margin-right></ion-icon>\n      Reporter un problème\n    </button>\n  </ion-toolbar>\n</ion-footer>\n'/*ion-inline-end:"/Users/Carla/Desktop/WebServ/appmob/src/pages/issue-map/issue-map.html"*/,
+            selector: 'page-issue-map',template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\issue-map\issue-map.html"*/'<!--\n\n  Generated template for the IssueMapPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>\n\n    <ion-title>Citizen Engagement</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <div *ngIf="!mapOptions">\n\n    <ion-spinner></ion-spinner>\n\n    <p text-center>Géolocalisation en cours...</p>\n\n  </div>\n\n  <div *ngIf="mapOptions" class="map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"></div>\n\n</ion-content>\n\n\n\n<ion-footer>\n\n  <ion-toolbar>\n\n    <button ion-button color="dark" clear (click)="openCreateIssuePage()">\n\n      <ion-icon name="add-circle" margin-right></ion-icon>\n\n      Reporter un problème\n\n    </button>\n\n  </ion-toolbar>\n\n</ion-footer>\n\n'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\issue-map\issue-map.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
@@ -576,10 +562,9 @@ var IssueMapPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_issue_issue__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_picture_picture__ = __webpack_require__(364);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__details_details__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_issue_issue__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_picture_picture__ = __webpack_require__(364);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__details_details__ = __webpack_require__(162);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -595,7 +580,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 /**
  * Generated class for the CreateIssuePage page.
  *
@@ -603,8 +587,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var CreateIssuePage = (function () {
-    function CreateIssuePage(auth, navCtrl, navParams, geolocation, issueService, pictureService) {
-        this.auth = auth;
+    function CreateIssuePage(navCtrl, navParams, geolocation, issueService, pictureService) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.geolocation = geolocation;
@@ -625,7 +608,6 @@ var CreateIssuePage = (function () {
         var _this = this;
         this.issueService.getIssueTypes().subscribe(function (issueTypes) {
             _this.issueTypes = issueTypes;
-            console.log(issueTypes);
         });
         var geolocationPromise = this.geolocation.getCurrentPosition();
         geolocationPromise.then(function (position) {
@@ -653,7 +635,7 @@ var CreateIssuePage = (function () {
         var _this = this;
         if (form.valid) {
             this.issueService.createIssue(this.newIssue).subscribe(function (newIssue) {
-                _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__details_details__["a" /* DetailsPage */], {
+                _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__details_details__["a" /* DetailsPage */], {
                     id: newIssue.id
                 });
             }, function (err) {
@@ -663,14 +645,13 @@ var CreateIssuePage = (function () {
     };
     CreateIssuePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-create-issue',template:/*ion-inline-start:"/Users/Carla/Desktop/WebServ/appmob/src/pages/create-issue/create-issue.html"*/'<!--\n  Generated template for the CreateIssuePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Reporter un problème</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <div *ngIf="!issueTypes || !myAddress">\n    <ion-spinner></ion-spinner>\n    <p text-center>Géolocalisation en cours...</p>\n  </div>\n\n  <form #issueForm="ngForm" *ngIf="issueTypes && myAddress" (ngSubmit)="createIssue(issueForm)">\n    <ion-item *ngIf="issueTypes">\n      <ion-label>Type de problème</ion-label>\n      <ion-select [(ngModel)]="newIssue.issueTypeHref" name="issueType" required #issueTypeSelect="ngModel">\n        <ion-option *ngFor="let issueType of issueTypes" [value]="issueType.href">{{ issueType.name }}</ion-option>\n      </ion-select>\n    </ion-item>\n\n    <ion-item *ngIf=\'myAddress\'>\n      <p><ion-icon name="pin"></ion-icon> {{ myAddress }}</p>\n    </ion-item>\n\n    <p *ngIf=\'issueDescriptionInput?.invalid && issueDescriptionInput?.dirty\' class="formError">\n      La description est requise et sa longueur doit être supérieur à 5 caractères.\n    </p>\n    <ion-item>\n      <ion-textarea rows="5" type="text" name="description" required [(ngModel)]="newIssue.description" required minlength=5 placeholder="Description" #issueDescriptionInput="ngModel"></ion-textarea>\n    </ion-item>\n\n    <ion-item>\n      <ion-tags-input [canEnterAdd]="false" type="text" name="tags" [(ngModel)]="newIssue.tags" placeholder="Tags"></ion-tags-input>\n    </ion-item>\n\n    <ion-item>\n      <ion-thumbnail item-start>\n        <img *ngIf="newIssue.imageUrl" [src]=newIssue.imageUrl>\n        <img *ngIf=\'!newIssue.imageUrl\' src="assets/imgs/placeholder.png">\n      </ion-thumbnail>\n      <button ion-button round outline block type="button" (click)=\'takePicture()\'>Attach file</button>\n    </ion-item>\n\n    <ion-item>\n      <button ion-button color="light" type="submit" block [disabled]=\'issueForm.invalid\'>Create</button>\n    </ion-item>\n  </form>\n</ion-content>\n'/*ion-inline-end:"/Users/Carla/Desktop/WebServ/appmob/src/pages/create-issue/create-issue.html"*/,
+            selector: 'page-create-issue',template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\create-issue\create-issue.html"*/'<!--\n\n  Generated template for the CreateIssuePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Reporter un problème</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <div *ngIf="!issueTypes || !myAddress">\n\n    <ion-spinner></ion-spinner>\n\n    <p text-center>Géolocalisation en cours...</p>\n\n  </div>\n\n\n\n  <form #issueForm="ngForm" *ngIf="issueTypes && myAddress" (ngSubmit)="createIssue(issueForm)">\n\n    <ion-item *ngIf="issueTypes">\n\n      <ion-label>Type de problème</ion-label>\n\n      <ion-select [(ngModel)]="newIssue.issueTypeHref" name="issueType" required #issueTypeSelect="ngModel">\n\n        <ion-option *ngFor="let issueType of issueTypes" [value]="issueType.href">{{ issueType.name }}</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n\n\n    <ion-item *ngIf=\'myAddress\'>\n\n      <p><ion-icon name="pin"></ion-icon> {{ myAddress }}</p>\n\n    </ion-item>\n\n\n\n    <p *ngIf=\'issueDescriptionInput?.invalid && issueDescriptionInput?.dirty\' class="formError">\n\n      La description est requise et sa longueur doit être supérieur à 5 caractères.\n\n    </p>\n\n    <ion-item>\n\n      <ion-textarea rows="5" type="text" name="description" required [(ngModel)]="newIssue.description" required minlength=5 placeholder="Description" #issueDescriptionInput="ngModel"></ion-textarea>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      <ion-tags-input [canEnterAdd]="false" type="text" name="tags" [(ngModel)]="newIssue.tags" placeholder="Tags"></ion-tags-input>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      <ion-thumbnail item-start>\n\n        <img *ngIf="newIssue.imageUrl" [src]=newIssue.imageUrl>\n\n        <img *ngIf=\'!newIssue.imageUrl\' src="assets/imgs/placeholder.png">\n\n      </ion-thumbnail>\n\n      <button ion-button round outline block type="button" (click)=\'takePicture()\'>Prendre une photo</button>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      <button ion-button color="light" type="submit" block [disabled]=\'issueForm.invalid\'>Créer</button>\n\n    </ion-item>\n\n  </form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\create-issue\create-issue.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* AuthProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_issue_issue__["a" /* IssueProvider */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_picture_picture__["a" /* PictureProvider */]])
+            __WEBPACK_IMPORTED_MODULE_3__providers_issue_issue__["a" /* IssueProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_picture_picture__["a" /* PictureProvider */]])
     ], CreateIssuePage);
     return CreateIssuePage;
 }());
@@ -691,7 +672,7 @@ var CreateIssuePage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operators__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config__ = __webpack_require__(92);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -714,8 +695,6 @@ var PictureProvider = (function () {
     function PictureProvider(camera, http) {
         this.camera = camera;
         this.http = http;
-        console.log('Hello PictureProvider Provider');
-        console.log('@@@ http client', !!this.http);
     }
     /**
      * Takes a picture, uploads it to the qimg API, and returns the created image.
@@ -780,7 +759,8 @@ var PictureProvider = (function () {
     };
     PictureProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */], __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["b" /* HttpClient */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */],
+            __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["b" /* HttpClient */]])
     ], PictureProvider);
     return PictureProvider;
 }());
@@ -796,7 +776,8 @@ var PictureProvider = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TutoPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(148);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -809,6 +790,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
  * Generated class for the TutoPage page.
  *
@@ -816,21 +798,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var TutoPage = (function () {
-    function TutoPage(navCtrl, navParams) {
+    function TutoPage(navCtrl, navParams, storage) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.storage = storage;
     }
-    TutoPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad TutoPage');
-    };
     TutoPage.prototype.navHome = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_2__home_home__["a" /* HomePage */]);
+        this.storage.set('tuto-done', true);
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__home_home__["a" /* HomePage */]);
     };
     TutoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-tuto',template:/*ion-inline-start:"/Users/Carla/Desktop/WebServ/appmob/src/pages/tuto/tuto.html"*/'<!--\n  Generated template for the TutoPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Comment utiliser l\'application</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-slides pager="true" parallax="true" padding>\n    <ion-slide>\n      <img src="assets/tuto/youhere.svg" class="slide-image">\n      <h1>Welcome to\n        <br/> Citizen Engagement\n      </h1>\n      <img src="assets/tuto/search-problem.svg" class="slide-image">\n      <p>Votre application pour reporter les anomalies de votre ville</p>\n    </ion-slide>\n\n    <ion-slide id="map">\n        <img src="assets/tuto/map.png" class="slide-image"/>\n        <ion-title class="slide-title" > Naviguez sur la carte </ion-title>\n        <p>Naviguez sur la carte et regardez les issues qui sont dans votre région et <b>reportez un problème</b> ou vous êtes</p>\n\n    </ion-slide>\n\n    <ion-slide>\n\n        <img src="assets/tuto/issue.png" class="slide-image"/>\n        <ion-title class="slide-title" > Reportez un problème </ion-title>\n        <p>Remplisez au moins <b> le type et la description</b> de votre problème</p>\n\n    </ion-slide>\n\n    <ion-slide>\n        <img src="assets/tuto/liste.png" class="slide-image"/>\n        <ion-title class="slide-title" > Commentez les problèmes </ion-title>\n        <p></p>\n\n      <button ion-button outline small (click)="navHome()">\n        Start using the app\n      </button>\n    \n    </ion-slide>\n\n  </ion-slides>\n</ion-content>\n'/*ion-inline-end:"/Users/Carla/Desktop/WebServ/appmob/src/pages/tuto/tuto.html"*/,
+            selector: 'page-tuto',template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\tuto\tuto.html"*/'<!--\n\n  Generated template for the TutoPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Comment utiliser l\'application</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n  <ion-slides pager="true" parallax="true" padding>\n\n    <ion-slide>\n\n      <img src="assets/tuto/youhere.svg" class="slide-image">\n\n      <h1>Welcome to\n\n        <br/> Citizen Engagement\n\n      </h1>\n\n      <img src="assets/tuto/search-problem.svg" class="slide-image">\n\n      <p>Votre application pour reporter les anomalies de votre ville</p>\n\n    </ion-slide>\n\n\n\n    <ion-slide id="map">\n\n        <img src="assets/tuto/map.png" class="slide-image"/>\n\n        <ion-title class="slide-title" > Naviguez sur la carte </ion-title>\n\n        <p>Naviguez sur la carte et regardez les issues qui sont dans votre région et <b>reportez un problème</b> ou vous êtes</p>\n\n\n\n    </ion-slide>\n\n\n\n    <ion-slide>\n\n\n\n        <img src="assets/tuto/issue.png" class="slide-image"/>\n\n        <ion-title class="slide-title" > Reportez un problème </ion-title>\n\n        <p>Remplisez au moins <b> le type et la description</b> de votre problème</p>\n\n\n\n    </ion-slide>\n\n\n\n    <ion-slide>\n\n        <img src="assets/tuto/liste.png" class="slide-image"/>\n\n        <ion-title class="slide-title" > Commentez les problèmes </ion-title>\n\n        <p></p>\n\n\n\n      <button ion-button outline small (click)="navHome()">\n\n        Commencer à utiliser l\'app\n\n      </button>\n\n    \n\n    </ion-slide>\n\n\n\n  </ion-slides>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\tuto\tuto.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]])
     ], TutoPage);
     return TutoPage;
 }());
@@ -908,7 +891,7 @@ var RegisterPage = (function () {
     ], RegisterPage.prototype, "registerForm", void 0);
     RegisterPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-register',template:/*ion-inline-start:"/Users/Carla/Desktop/WebServ/appmob/src/pages/register/register.html"*/'<!--\n  Generated template for the RegisterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>S\'enregistrer</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <form (submit)="onSubmit($event)" #registerForm="ngForm">\n      <ion-list>\n  \n        <!-- Name input -->\n        <ion-item>\n          <ion-label floating>Nom d\'utilisateur</ion-label>\n          <ion-input type="text" name="name" [(ngModel)]="newUser.name" required max-length=25 #nameInput="ngModel"></ion-input>\n        </ion-item>\n  \n        <!-- Error message displayed if the name is invalid -->\n        <ion-item *ngIf="nameInput.invalid && nameInput.dirty" no-lines>\n          <p ion-text color="danger">Le nom d\'utilisateur est requis.</p>\n        </ion-item>\n  \n        <!-- Password input -->\n        <ion-item>\n          <ion-label floating>Mot de passe</ion-label>\n          <ion-input type="password" name="password" [(ngModel)]="newUser.password" required minlength=4 #passwordInput="ngModel"></ion-input>\n        </ion-item>\n\n        <!-- Error message displayed if the password is invalid -->\n        <ion-item *ngIf="passwordInput.invalid && passwordInput.dirty" no-lines>\n          <p ion-text color="danger">Le mot de passe est invalide.</p>\n        </ion-item>\n\n        <!-- Firstname input -->\n        <ion-item>\n          <ion-label floating>Prénom</ion-label>\n          <ion-input type="text" name="firstname" [(ngModel)]="newUser.firstname" required minlength=2 maxlength=25 #firstnameInput="ngModel"></ion-input>\n        </ion-item>\n\n        <!-- Error message displayed if the firstname is invalid -->\n        <ion-item *ngIf="firstnameInput.invalid && firstnameInput.dirty" no-lines>\n          <p ion-text color="danger">Le prénom est invalide.</p>\n        </ion-item>\n\n        <!-- Lastname input -->\n        <ion-item>\n          <ion-label floating>Nom</ion-label>\n          <ion-input type="text" name="lastname" [(ngModel)]="newUser.lastname" required minlength=2 maxlength=25 #lastnameInput="ngModel"></ion-input>\n        </ion-item>\n\n        <!-- Error message displayed if the lastname is invalid -->\n        <ion-item *ngIf="lastnameInput.invalid && lastnameInput.dirty" no-lines>\n          <p ion-text color="danger">Le nom est invalide.</p>\n        </ion-item>\n\n        <!-- Phone input -->\n        <ion-item>\n          <ion-label floating>Téléphone</ion-label>\n          <ion-input type="phone" name="phone" #phoneInput="ngModel" [(ngModel)]="newUser.phone" required maxlength=20></ion-input>\n        </ion-item>\n\n        <!-- Error message displayed if the phone is invalid -->\n        <ion-item *ngIf="phoneInput.invalid && phoneInput.dirty" no-lines>\n          <p ion-text color="danger">Le numéro de téléphone est invalide.</p>\n        </ion-item>\n  \n      </ion-list>\n  \n      <div padding>\n  \n        <!-- Submit button -->\n        <button type="submit" [disabled]="registerForm.invalid" ion-button block>S\'enregistrer</button>\n\n        <!-- Error message displayed if the registration failed -->\n        <p *ngIf="subscribeError" ion-text color="danger">Erreur lors de l\'enregistrement. Il se peut que ce nom d\'utilisateur existe déjà.</p>\n  \n      </div>\n    </form>\n  </ion-content>\n  \n'/*ion-inline-end:"/Users/Carla/Desktop/WebServ/appmob/src/pages/register/register.html"*/,
+            selector: 'page-register',template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\register\register.html"*/'<!--\n  Generated template for the RegisterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>S\'enregistrer</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <form (submit)="onSubmit($event)" #registerForm="ngForm">\n      <ion-list>\n  \n        <!-- Name input -->\n        <ion-item>\n          <ion-label floating>Nom d\'utilisateur</ion-label>\n          <ion-input type="text" name="name" [(ngModel)]="newUser.name" required max-length=25 #nameInput="ngModel"></ion-input>\n        </ion-item>\n  \n        <!-- Error message displayed if the name is invalid -->\n        <ion-item *ngIf="nameInput.invalid && nameInput.dirty" no-lines>\n          <p ion-text color="danger">Le nom d\'utilisateur est requis.</p>\n        </ion-item>\n  \n        <!-- Password input -->\n        <ion-item>\n          <ion-label floating>Mot de passe</ion-label>\n          <ion-input type="password" name="password" [(ngModel)]="newUser.password" required minlength=4 #passwordInput="ngModel"></ion-input>\n        </ion-item>\n\n        <!-- Error message displayed if the password is invalid -->\n        <ion-item *ngIf="passwordInput.invalid && passwordInput.dirty" no-lines>\n          <p ion-text color="danger">Le mot de passe est invalide.</p>\n        </ion-item>\n\n        <!-- Firstname input -->\n        <ion-item>\n          <ion-label floating>Prénom</ion-label>\n          <ion-input type="text" name="firstname" [(ngModel)]="newUser.firstname" required minlength=2 maxlength=25 #firstnameInput="ngModel"></ion-input>\n        </ion-item>\n\n        <!-- Error message displayed if the firstname is invalid -->\n        <ion-item *ngIf="firstnameInput.invalid && firstnameInput.dirty" no-lines>\n          <p ion-text color="danger">Le prénom est invalide.</p>\n        </ion-item>\n\n        <!-- Lastname input -->\n        <ion-item>\n          <ion-label floating>Nom</ion-label>\n          <ion-input type="text" name="lastname" [(ngModel)]="newUser.lastname" required minlength=2 maxlength=25 #lastnameInput="ngModel"></ion-input>\n        </ion-item>\n\n        <!-- Error message displayed if the lastname is invalid -->\n        <ion-item *ngIf="lastnameInput.invalid && lastnameInput.dirty" no-lines>\n          <p ion-text color="danger">Le nom est invalide.</p>\n        </ion-item>\n\n        <!-- Phone input -->\n        <ion-item>\n          <ion-label floating>Téléphone</ion-label>\n          <ion-input type="phone" name="phone" #phoneInput="ngModel" [(ngModel)]="newUser.phone" required maxlength=20></ion-input>\n        </ion-item>\n\n        <!-- Error message displayed if the phone is invalid -->\n        <ion-item *ngIf="phoneInput.invalid && phoneInput.dirty" no-lines>\n          <p ion-text color="danger">Le numéro de téléphone est invalide.</p>\n        </ion-item>\n  \n      </ion-list>\n  \n      <div padding>\n  \n        <!-- Submit button -->\n        <button type="submit" [disabled]="registerForm.invalid" ion-button block>S\'enregistrer</button>\n\n        <!-- Error message displayed if the registration failed -->\n        <p *ngIf="subscribeError" ion-text color="danger">Erreur lors de l\'enregistrement. Il se peut que ce nom d\'utilisateur existe déjà.</p>\n  \n      </div>\n    </form>\n  </ion-content>\n  \n'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\register\register.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
@@ -930,7 +913,7 @@ var RegisterPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operators__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_operators__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_config__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_config__ = __webpack_require__(92);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1015,12 +998,12 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__ = __webpack_require__(262);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__ = __webpack_require__(266);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__asymmetrik_ngx_leaflet__ = __webpack_require__(420);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_geolocation__ = __webpack_require__(147);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_native_geocoder__ = __webpack_require__(268);
@@ -1029,10 +1012,10 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_launch_navigator__ = __webpack_require__(270);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_ionic_tags_input__ = __webpack_require__(430);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__app_component__ = __webpack_require__(432);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__providers_auth_auth__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__providers_auth_auth__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_auth_interceptor_auth_interceptor__ = __webpack_require__(714);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_user_user__ = __webpack_require__(367);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_issue_issue__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_issue_issue__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_home_home__ = __webpack_require__(148);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_create_issue_create_issue__ = __webpack_require__(363);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_issue_list_issue_list__ = __webpack_require__(361);
@@ -1150,88 +1133,7 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 38:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(433);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operators__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config__ = __webpack_require__(91);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-/**
- * Authentication service for login/logout.
- */
-var AuthProvider = (function () {
-    function AuthProvider(http, storage) {
-        var _this = this;
-        this.http = http;
-        this.storage = storage;
-        this.authSource = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["ReplaySubject"](1);
-        this.auth$ = this.authSource.asObservable();
-        this.storage.get('auth').then(function (auth) {
-            _this.authSource.next(auth);
-        });
-    }
-    AuthProvider.prototype.isAuthenticated = function () {
-        return this.auth$.pipe(Object(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__["map"])(function (auth) { return !!auth; }));
-    };
-    AuthProvider.prototype.getUser = function () {
-        return this.auth$.pipe(Object(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__["map"])(function (auth) { return auth ? auth.user : undefined; }));
-    };
-    AuthProvider.prototype.getToken = function () {
-        return this.auth$.pipe(Object(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__["map"])(function (auth) { return auth ? auth.token : undefined; }));
-    };
-    AuthProvider.prototype.logIn = function (authRequest) {
-        var _this = this;
-        var authUrl = __WEBPACK_IMPORTED_MODULE_5__app_config__["a" /* config */].apiUrl + "/auth";
-        return this.http.post(authUrl, authRequest).pipe(Object(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__["delayWhen"])(function (auth) {
-            return _this.saveAuth(auth);
-        }), Object(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__["map"])(function (auth) {
-            _this.authSource.next(auth);
-            console.log("User " + auth.user.name + " logged in");
-            return auth.user;
-        }));
-    };
-    AuthProvider.prototype.logOut = function () {
-        this.authSource.next(null);
-        this.storage.remove('auth');
-        console.log('User logged out');
-    };
-    AuthProvider.prototype.saveAuth = function (auth) {
-        return __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Observable"].fromPromise(this.storage.set('auth', auth));
-    };
-    AuthProvider = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["b" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]])
-    ], AuthProvider);
-    return AuthProvider;
-}());
-
-//# sourceMappingURL=auth.js.map
-
-/***/ }),
-
-/***/ 43:
+/***/ 42:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1240,7 +1142,7 @@ var AuthProvider = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_native_geocoder__ = __webpack_require__(268);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_launch_navigator__ = __webpack_require__(270);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_config__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_config__ = __webpack_require__(92);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_operators__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_operators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_operators__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1431,7 +1333,7 @@ var IssueProvider = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(262);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(148);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_auth_auth__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_auth_auth__ = __webpack_require__(49);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1469,14 +1371,98 @@ var MyApp = (function () {
         });
     }
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/Carla/Desktop/WebServ/appmob/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/Carla/Desktop/WebServ/appmob/src/app/app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n\n'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\app\app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__providers_auth_auth__["a" /* AuthProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__providers_auth_auth__["a" /* AuthProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */],
+            __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
     return MyApp;
 }());
 
 //# sourceMappingURL=app.component.js.map
+
+/***/ }),
+
+/***/ 49:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(433);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operators__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config__ = __webpack_require__(92);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+/**
+ * Authentication service for login/logout.
+ */
+var AuthProvider = (function () {
+    function AuthProvider(http, storage) {
+        var _this = this;
+        this.http = http;
+        this.storage = storage;
+        this.authSource = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["ReplaySubject"](1);
+        this.auth$ = this.authSource.asObservable();
+        this.storage.get('auth').then(function (auth) {
+            _this.authSource.next(auth);
+        });
+    }
+    AuthProvider.prototype.isAuthenticated = function () {
+        return this.auth$.pipe(Object(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__["map"])(function (auth) { return !!auth; }));
+    };
+    AuthProvider.prototype.getUser = function () {
+        return this.auth$.pipe(Object(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__["map"])(function (auth) { return auth ? auth.user : undefined; }));
+    };
+    AuthProvider.prototype.getToken = function () {
+        return this.auth$.pipe(Object(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__["map"])(function (auth) { return auth ? auth.token : undefined; }));
+    };
+    AuthProvider.prototype.logIn = function (authRequest) {
+        var _this = this;
+        var authUrl = __WEBPACK_IMPORTED_MODULE_5__app_config__["a" /* config */].apiUrl + "/auth";
+        return this.http.post(authUrl, authRequest).pipe(Object(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__["delayWhen"])(function (auth) {
+            return _this.saveAuth(auth);
+        }), Object(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__["map"])(function (auth) {
+            _this.authSource.next(auth);
+            console.log("User " + auth.user.name + " logged in");
+            return auth.user;
+        }));
+    };
+    AuthProvider.prototype.logOut = function () {
+        this.authSource.next(null);
+        this.storage.remove('auth');
+        console.log('User logged out');
+    };
+    AuthProvider.prototype.saveAuth = function (auth) {
+        return __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Observable"].fromPromise(this.storage.set('auth', auth));
+    };
+    AuthProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["b" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]])
+    ], AuthProvider);
+    return AuthProvider;
+}());
+
+//# sourceMappingURL=auth.js.map
 
 /***/ }),
 
@@ -1533,7 +1519,7 @@ var NewUser = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_operators__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_operators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(49);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1585,7 +1571,7 @@ var AuthInterceptorProvider = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_issue__ = __webpack_require__(368);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_issue_issue__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_issue_issue__ = __webpack_require__(42);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1617,7 +1603,6 @@ var IssueComments = (function () {
         });
     }
     IssueComments.prototype.ngOnInit = function () {
-        console.log('ngOnInit IssueComments');
         this.loadIssueComments();
     };
     IssueComments.prototype.loadIssueComments = function () {
@@ -1632,7 +1617,7 @@ var IssueComments = (function () {
     ], IssueComments.prototype, "issue", void 0);
     IssueComments = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'issue-comments',template:/*ion-inline-start:"/Users/Carla/Desktop/WebServ/appmob/src/pages/issue-comments/issue-comments.html"*/'<ion-list *ngIf="comments?.length>0">\n  <ion-item *ngFor="let comment of comments" no-lines>\n    <ion-avatar item-start>\n      <img src="assets/imgs/empty-profile.png">\n    </ion-avatar>\n    <h2>{{ comment.author.firstname }} {{ comment.author.lastname }}</h2>\n    <h3>{{ comment.createdAt | date:\'dd.MM.yyyy HH:mm\' }}</h3>\n    <p>{{ comment.text }}</p>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"/Users/Carla/Desktop/WebServ/appmob/src/pages/issue-comments/issue-comments.html"*/,
+            selector: 'issue-comments',template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\issue-comments\issue-comments.html"*/'<ion-list *ngIf="comments?.length>0">\n  <ion-item *ngFor="let comment of comments" no-lines>\n    <ion-avatar item-start>\n      <img src="assets/imgs/empty-profile.png">\n    </ion-avatar>\n    <h2>{{ comment.author.firstname }} {{ comment.author.lastname }}</h2>\n    <h3>{{ comment.createdAt | date:\'dd.MM.yyyy HH:mm\' }}</h3>\n    <p>{{ comment.text }}</p>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\issue-comments\issue-comments.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
@@ -1656,7 +1641,7 @@ var IssueComments = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_issue__ = __webpack_require__(368);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_issue_comment__ = __webpack_require__(717);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_issue_issue__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_issue_issue__ = __webpack_require__(42);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1687,9 +1672,6 @@ var IssueCommentForm = (function () {
         this.newComment = new __WEBPACK_IMPORTED_MODULE_4__models_issue_comment__["a" /* IssueComment */]();
         this.subscribeError = false;
     }
-    IssueCommentForm.prototype.ngOnInit = function () {
-        console.log('ngOnInit IssueCommentForm');
-    };
     IssueCommentForm.prototype.onCommentSubmit = function ($event) {
         var _this = this;
         // Prevent default HTML form behavior.
@@ -1699,9 +1681,7 @@ var IssueCommentForm = (function () {
             return;
         }
         this.subscribeError = false;
-        console.log(this.newComment);
         this.issueService.createIssueComment(this.issue.id, this.newComment).subscribe(function (newComment) {
-            console.log(newComment);
             _this.events.publish('comment:created');
             _this.commentForm.reset();
         }, function (err) {
@@ -1718,7 +1698,7 @@ var IssueCommentForm = (function () {
     ], IssueCommentForm.prototype, "issue", void 0);
     IssueCommentForm = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'issue-comment-form',template:/*ion-inline-start:"/Users/Carla/Desktop/WebServ/appmob/src/pages/issue-comment-form/issue-comment-form.html"*/'<h2>Commentaires</h2>\n<form (submit)="onCommentSubmit($event)" #commentForm="ngForm">\n  <ion-list>\n\n    <!-- Comment input -->\n    <ion-item no-lines>\n      <ion-textarea rows="3" type="text" name="comment" required [(ngModel)]="newComment.text" required minlength=2 maxlength=1000 #issueCommentInput="ngModel" placeholder="Nouveau commentaire"></ion-textarea>\n    </ion-item>\n\n    <!-- Error message displayed if the name is invalid -->\n    <ion-item *ngIf="issueCommentInput.invalid && issueCommentInput.dirty" no-lines>\n      <p ion-text color="danger">Ce champ est obligatoire.</p>\n    </ion-item>\n\n  </ion-list>\n\n  <div padding>\n\n    <!-- Submit button -->\n    <button ion-button icon-left small type="submit" [disabled]="commentForm.invalid">\n      <ion-icon name="send"></ion-icon>\n      Envoyer\n    </button>\n\n    <!-- Error message displayed if the registration failed -->\n    <p *ngIf="commentError" ion-text color="danger">Erreur lors de l\'envoi du commentaire.</p>\n\n  </div>\n</form>\n<issue-comments [issue]="issue"></issue-comments>\n'/*ion-inline-end:"/Users/Carla/Desktop/WebServ/appmob/src/pages/issue-comment-form/issue-comment-form.html"*/,
+            selector: 'issue-comment-form',template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\issue-comment-form\issue-comment-form.html"*/'<h2>Commentaires</h2>\n<form (submit)="onCommentSubmit($event)" #commentForm="ngForm">\n  <ion-list>\n\n    <!-- Comment input -->\n    <ion-item no-lines>\n      <ion-textarea rows="3" type="text" name="comment" required [(ngModel)]="newComment.text" required minlength=2 maxlength=1000 #issueCommentInput="ngModel" placeholder="Nouveau commentaire"></ion-textarea>\n    </ion-item>\n\n    <!-- Error message displayed if the name is invalid -->\n    <ion-item *ngIf="issueCommentInput.invalid && issueCommentInput.dirty" no-lines>\n      <p ion-text color="danger">Ce champ est obligatoire.</p>\n    </ion-item>\n\n  </ion-list>\n\n  <div padding>\n\n    <!-- Submit button -->\n    <button ion-button icon-left small type="submit" [disabled]="commentForm.invalid">\n      <ion-icon name="send"></ion-icon>\n      Envoyer\n    </button>\n\n    <!-- Error message displayed if the registration failed -->\n    <p *ngIf="commentError" ion-text color="danger">Erreur lors de l\'envoi du commentaire.</p>\n\n  </div>\n</form>\n<issue-comments [issue]="issue"></issue-comments>\n'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\issue-comment-form\issue-comment-form.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
@@ -1747,7 +1727,7 @@ var IssueComment = (function () {
 
 /***/ }),
 
-/***/ 91:
+/***/ 92:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

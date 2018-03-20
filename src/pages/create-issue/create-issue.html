@@ -47,11 +47,11 @@
         <img *ngIf="newIssue.imageUrl" [src]=newIssue.imageUrl>
         <img *ngIf='!newIssue.imageUrl' src="assets/imgs/placeholder.png">
       </ion-thumbnail>
-      <button ion-button round outline block type="button" (click)='takePicture()'>Attach file</button>
+      <button ion-button round outline block type="button" (click)='takePicture()'>Prendre une photo</button>
     </ion-item>
 
     <ion-item>
-      <button ion-button color="light" type="submit" block [disabled]='issueForm.invalid'>Create</button>
+      <button ion-button color="light" type="submit" block [disabled]='issueForm.invalid'>Créer</button>
     </ion-item>
   </form>
 </ion-content>

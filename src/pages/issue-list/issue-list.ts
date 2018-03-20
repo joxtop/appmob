@@ -94,7 +94,6 @@ export class IssueListPage {
         this.issues = this.issues.concat(newIssues);
       }
       this.filteredIssues = this.issues;
-      console.log(this.filteredIssues);
       infiniteScroll.complete();
     });
   }

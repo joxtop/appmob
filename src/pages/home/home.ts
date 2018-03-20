@@ -3,14 +3,11 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import { AuthProvider } from '../../providers/auth/auth';
-import { LoginPage } from '../login/login';
-
 import { ProfilePage } from '../profile/profile';
 import { IssueListPage } from '../issue-list/issue-list';
 import { IssueMapPage } from '../issue-map/issue-map';
 import { User } from '../../models/user';
 import { TutoPage } from '../tuto/tuto';
-
 
 
 export interface HomePageTab {
@@ -35,6 +32,13 @@ export class HomePage {
     public navParams: NavParams,
     public storage: Storage
   ) {
+    // If the tuto is not yet done, redirect the user to the tuto page
+    this.storage.get('tuto-done').then(done => {
+      if (!done) {
+        this.navCtrl.setRoot(TutoPage);
+      }
+    });
+
     // set the root page
     this.rootPage = IssueMapPage;
 
@@ -50,21 +54,11 @@ export class HomePage {
     });
   }
 
-  ionViewDidLoad() {
-    this.storage.get('tuto-done').then(done => {
-      if (!done) {
-        this.storage.set('tuto-done', true);
-        this.navCtrl.setRoot(TutoPage);
-      }
-    });
-  }
-
   logOut() {
     this.auth.logOut();
   }
 
   openPage(page: any) {
-    console.log(page);
     this.navCtrl.push(page.component, {
       user: page.user,
       title: page.title

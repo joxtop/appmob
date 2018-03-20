@@ -1,27 +1,10 @@
-import {
-  Component
-} from '@angular/core';
-import {
-  NavController,
-  NavParams,
-  FabContainer
-} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, NavParams, FabContainer } from 'ionic-angular';
 
-import {
-  Issue
-} from '../../models/issue';
-import {
-  IssueProvider
-} from '../../providers/issue/issue';
-import {
-  UserProvider
-} from '../../providers/user/user';
-import {
-  User
-} from '../../models/user';
-import {
-  ProfilePage
-} from '../profile/profile';
+import { Issue } from '../../models/issue';
+import { IssueProvider } from '../../providers/issue/issue';
+import { User } from '../../models/user';
+import { ProfilePage } from '../profile/profile';
 import { AuthProvider } from '../../providers/auth/auth';
 import { IssueAction } from '../../models/issue-action';
 
@@ -81,13 +64,10 @@ export class DetailsPage {
 
   changeStatus(newStatus: string, fab: FabContainer) {
     fab.close();
-    console.log("New status", newStatus);
     let issueAction = new IssueAction();
     issueAction.reason = `ìssue ${newStatus}`;
     issueAction.type = newStatus;
-    console.log('issueAction', issueAction);
     this.issueService.addIssueAction(this.issue.id, issueAction).subscribe(issue => {
-      console.log('change issue status', issue);
       switch (issue.type) {
         case 'start':
           this.issue.state = 'inProgress';

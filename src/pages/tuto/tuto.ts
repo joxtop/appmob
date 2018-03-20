@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
 import { HomePage } from '../home/home';
 
 /**
@@ -15,15 +17,14 @@ import { HomePage } from '../home/home';
 })
 export class TutoPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TutoPage');
-  }
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public storage: Storage
+  ) {}
 
   navHome() {
+    this.storage.set('tuto-done', true);
     this.navCtrl.setRoot(HomePage);
   }
-
 }

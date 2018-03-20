@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
 
 import { Issue } from '../../models/issue';
@@ -34,7 +34,6 @@ export class IssueComments {
   }
 
   ngOnInit() {
-    console.log('ngOnInit IssueComments');
     this.loadIssueComments();
   }
 

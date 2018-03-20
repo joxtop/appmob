@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { latLng, MapOptions, marker, Marker, Map, tileLayer } from 'leaflet';
 
-import {CreateIssuePage} from '../create-issue/create-issue';
-import { LatLng, latLng, MapOptions, marker, Marker, Map, tileLayer } from 'leaflet';
-
+import { CreateIssuePage } from '../create-issue/create-issue';
 import { IssueProvider } from '../../providers/issue/issue';
 import { Issue } from '../../models/issue';
 
@@ -35,11 +33,15 @@ export class IssueMapPage {
     private issueService: IssueProvider,
     private geolocation: Geolocation,
   ) {
-    const tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    const tileLayerOptions = { maxZoom: 18 };
-  
+    this.mapMarkers = [];
+  }
+
+  ionViewDidLoad() {
+    this.loadIssues();
     this.geolocation.getCurrentPosition().then(position => {
       console.log(`User is at ${position.coords.latitude}, ${position.coords.longitude}`);
+      const tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+      const tileLayerOptions = { maxZoom: 18 };
       this.mapOptions = {
         layers: [
           tileLayer(tileLayerUrl, tileLayerOptions)
@@ -50,14 +52,6 @@ export class IssueMapPage {
     }).catch(err => {
       console.warn(`Could not retrieve user position because: ${err.message}`);
     });
-    this.mapMarkers = [];
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad IssueMapPage');
-    this.loadIssues();
-
-
   }
 
   private loadIssues(search?: string) {
@@ -67,7 +61,6 @@ export class IssueMapPage {
       issues.forEach((issue) => {
         this.mapMarkers.push(marker([issue.location.coordinates[1], issue.location.coordinates[0]]).bindTooltip(issue.description));
       });
-      console.log(this.mapMarkers);
     });
   }
 

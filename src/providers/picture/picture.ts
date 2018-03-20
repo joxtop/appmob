@@ -1,27 +1,11 @@
-import {
-  HttpClient
-} from '@angular/common/http';
-import {
-  Injectable
-} from '@angular/core';
-import {
-  Camera,
-  CameraOptions
-} from '@ionic-native/camera';
-import {
-  Observable
-} from 'rxjs/Observable';
-import {
-  switchMap,
-  tap
-} from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Observable } from 'rxjs/Observable';
+import { switchMap, tap } from 'rxjs/operators';
 
-import {
-  config
-} from '../../app/config';
-import {
-  QimgImage
-} from '../../models/qimg-image';
+import { config } from '../../app/config';
+import { QimgImage } from '../../models/qimg-image';
 
 /**
  * Service to take pictures and upload them to the qimg API.
@@ -29,10 +13,10 @@ import {
 @Injectable()
 export class PictureProvider {
 
-  constructor(private camera: Camera, private http: HttpClient) {
-    console.log('Hello PictureProvider Provider');
-    console.log('@@@ http client', !!this.http);
-  }
+  constructor(
+    private camera: Camera, 
+    private http: HttpClient
+  ) {}
 
   /**
    * Takes a picture, uploads it to the qimg API, and returns the created image.

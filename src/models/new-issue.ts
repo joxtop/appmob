@@ -1,5 +1,3 @@
-import { IssueType } from "./issue-type";
-
 export class NewIssue {
   description: string;
   imageUrl: string;
