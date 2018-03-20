@@ -22,20 +22,18 @@ import { Issue } from '../../models/issue';
   templateUrl: 'issue-map.html',
 })
 export class IssueMapPage {
-  lng: number;
-  lat: number;
-  myAddress: string;
+
   issues: Issue[];
   mapOptions: MapOptions;
   mapMarkers: Marker[];
-  userLoc: Marker;
+  userMarker: Marker;
   map: Map;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
     private issueService: IssueProvider,
-    private geolocation: Geolocation,
+    private geolocation: Geolocation
 
   ) {
     const tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -54,16 +52,6 @@ export class IssueMapPage {
     console.log('ionViewDidLoad IssueMapPage');
     this.loadIssues();
 
-    const geolocationPromise = this.geolocation.getCurrentPosition();
-    geolocationPromise.then(position => {
-      const coords = position.coords;
-      this.userLoc = new Marker([coords.latitude, coords.longitude]);
-      this.userLoc.addTo(this.map);
-      this.map.setView([coords.latitude, coords.longitude], 14);
-      console.log(`User is at ${coords.longitude}, ${coords.latitude}`);
-    }).catch(err => {
-      console.warn(`Could not retrieve user position because: ${err.message}`);
-    });
 
   }
 
@@ -80,6 +68,10 @@ export class IssueMapPage {
 
   openCreateIssuePage(){
     this.navCtrl.push(CreateIssuePage);
+  }
+
+  onMapReady(map: Map){
+    this.map = map;
   }
   
 }

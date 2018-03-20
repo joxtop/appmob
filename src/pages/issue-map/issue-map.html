@@ -19,7 +19,7 @@
         <ion-spinner></ion-spinner>
         <p text-center>Géolocalisation en cours...</p>
       </div>
-  <div *ngIf="mapMarkers.length>0" class="map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"></div>
+  <div *ngIf="mapMarkers.length>0" class="map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers" (leafletMapReady)='onMapReady($event)'></div>
 </ion-content>
 
 <ion-footer>
