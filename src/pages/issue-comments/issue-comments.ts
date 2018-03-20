@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Events } from 'ionic-angular';
 
 import { Issue } from '../../models/issue';
 import { IssueProvider } from '../../providers/issue/issue';
@@ -25,8 +25,13 @@ export class IssueComments {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private issueService: IssueProvider
-  ) {}
+    private issueService: IssueProvider,
+    public events: Events
+  ) {
+    events.subscribe('comment:created', () => {
+      this.loadIssueComments();
+    });
+  }
 
   ngOnInit() {
     console.log('ngOnInit IssueComments');
@@ -35,7 +40,7 @@ export class IssueComments {
 
   private loadIssueComments() {
     this.issueService.getIssueCommentsById(this.issue.id).subscribe(issueComments => {
-      this.comments = issueComments;
+      this.comments = issueComments.reverse();
     });
   }
 

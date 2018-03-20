@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>How to use our App</ion-title>
+    <ion-title>Comment utiliser l'application</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -17,22 +17,48 @@
   <ion-slides pager="true" parallax="true" padding>
 
     <ion-slide>
-      <img src="assets/img1.svg">
-      <h1>Welcome to my app!</h1>
+      <img src="assets/tuto/youhere.svg" class="slide-image">
+      <h1>Welcome to
+        <br/> Citizen Engagement
+      </h1>
+      <img src="assets/tuto/search-problem.svg" class="slide-image">
+      <p>Votre application pour reporter les anomalies de votre ville</p>
+    </ion-slide>
+
+    <ion-slide id="map">
+      <div class="text">
+        <h3>Naviguez sur la carte</h3>
+      </div>
+      <div class="image-fond">
+        <img src="assets/tuto/map.png" class="image-fond">
+
+      </div>
+
+      <div class="text">
+        <h2>Reportez un probleme</h2>
+      </div>
     </ion-slide>
 
     <ion-slide>
-      <img src="assets/img2.svg">
-      <h1>All of the features</h1>
-      <p>Here's what you can do with the app...</p>
+      <div class="text">
+        <h3>Remplisez au moins le type de problème et la description</h3>
+      </div>
+      <div class="image-fond">
+        <img src="assets/tuto/issue.png" class="image-fond">
+      </div>
     </ion-slide>
 
     <ion-slide>
-      <img src="assets/img3.svg">
-      <h1>Get started now!</h1>
+      <div class="text">
+        <h3>Commentez les problèmes</h3>
+      </div>
+      <div class="image-fond1">
+        <img src="assets/tuto/liste.png">
+      </div>
       <button ion-button outline small (click)="navHome()">
         Start using the app
       </button>
+    
     </ion-slide>
 
   </ion-slides>

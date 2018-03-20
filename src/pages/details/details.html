@@ -18,6 +18,7 @@
   <ion-spinner *ngIf="!issue"></ion-spinner>
   <ion-card *ngIf='issue'>
     <img *ngIf='issue.imageUrl' src="{{issue.imageUrl}}"/>
+    <img *ngIf='!issue.imageUrl' src="assets/imgs/placeholder.png"/>
     <ion-card-content>
       <ion-card-title class="truncate" >{{ issue.description }}</ion-card-title>
       <p>{{ issue.description }}</p>
@@ -43,7 +44,7 @@
           <div><ion-icon name="md-calendar"></ion-icon> {{ issue.createdAt | date:'dd.MM.yyyy HH:mm' }}</div>
         </ion-col>
       </ion-row>
-      <issue-comments [issue]="issue"></issue-comments>
+      <issue-comment-form [issue]="issue"></issue-comment-form>
     </ion-card-content>
   </ion-card>
 </ion-content>

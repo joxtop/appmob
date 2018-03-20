@@ -31,6 +31,7 @@ import { PictureProvider } from '../providers/picture/picture';
 import { IssueComments } from '../pages/issue-comments/issue-comments';
 import { RegisterPage } from '../pages/register/register';
 import { TutoPage } from '../pages/tuto/tuto';
+import { IssueCommentForm } from '../pages/issue-comment-form/issue-comment-form';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { TutoPage } from '../pages/tuto/tuto';
     ProfilePage,
     IssueComments,
     RegisterPage,
-    TutoPage
+    TutoPage,
+    IssueCommentForm
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,8 @@ import { TutoPage } from '../pages/tuto/tuto';
     ProfilePage,
     IssueComments,
     RegisterPage,
-    TutoPage
+    TutoPage,
+    IssueCommentForm
   ],
   providers: [
     StatusBar,

@@ -28,7 +28,7 @@ export class IssueMapPage {
   issues: Issue[];
   mapOptions: MapOptions;
   mapMarkers: Marker[];
-  userMarker: Marker;
+  userLoc: Marker;
   map: Map;
 
   constructor(
@@ -45,11 +45,10 @@ export class IssueMapPage {
         tileLayer(tileLayerUrl, tileLayerOptions)
       ],
       zoom: 14,
-      center: latLng(46.5160000, 6.6328200)
+      center: latLng(46.778186, 6.641524)
     };
     this.mapMarkers = [];
   }
-
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad IssueMapPage');
@@ -57,9 +56,11 @@ export class IssueMapPage {
 
     const geolocationPromise = this.geolocation.getCurrentPosition();
     geolocationPromise.then(position => {
-      console.log(position);
-      this.mapOptions.center = latLng(position.coords.latitude, position.coords.longitude);
-      console.log(`User is at ${this.lat}, ${this.lng}`);
+      const coords = position.coords;
+      this.userLoc = new Marker([coords.latitude, coords.longitude]);
+      this.userLoc.addTo(this.map);
+      this.map.setView([coords.latitude, coords.longitude], 14);
+      console.log(`User is at ${coords.longitude}, ${coords.latitude}`);
     }).catch(err => {
       console.warn(`Could not retrieve user position because: ${err.message}`);
     });
