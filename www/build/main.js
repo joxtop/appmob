@@ -1140,11 +1140,11 @@ var AppModule = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return IssueProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_native_geocoder__ = __webpack_require__(268);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_launch_navigator__ = __webpack_require__(270);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_config__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_operators__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_operators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_operators__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operators__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_operators__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_geocoder__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_launch_navigator__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_config__ = __webpack_require__(92);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1173,7 +1173,7 @@ var IssueProvider = (function () {
     }
     // Get issue list
     IssueProvider.prototype.getIssues = function (include, search, sort, page, pageSize, image) {
-        var issuesUrl = __WEBPACK_IMPORTED_MODULE_4__app_config__["a" /* config */].apiUrl + "/issues";
+        var issuesUrl = __WEBPACK_IMPORTED_MODULE_5__app_config__["a" /* config */].apiUrl + "/issues";
         //Create new HttpParams
         var params = new __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["d" /* HttpParams */]();
         params = search ? params.append('search', search) : params;
@@ -1193,13 +1193,13 @@ var IssueProvider = (function () {
         var httpOptions = {
             params: params,
         };
-        return this.http.get(issuesUrl, httpOptions).pipe(Object(__WEBPACK_IMPORTED_MODULE_5_rxjs_operators__["map"])(function (issues) {
+        return this.http.get(issuesUrl, httpOptions).pipe(Object(__WEBPACK_IMPORTED_MODULE_2_rxjs_operators__["map"])(function (issues) {
             console.log(issues);
             return issues;
         }));
     };
     IssueProvider.prototype.getIssueById = function (id, include) {
-        var issueUrl = __WEBPACK_IMPORTED_MODULE_4__app_config__["a" /* config */].apiUrl + "/issues/" + id;
+        var issueUrl = __WEBPACK_IMPORTED_MODULE_5__app_config__["a" /* config */].apiUrl + "/issues/" + id;
         //Create new HttpParams
         var params = new __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["d" /* HttpParams */]();
         if (include) {
@@ -1210,7 +1210,7 @@ var IssueProvider = (function () {
         var httpOptions = {
             params: params,
         };
-        return this.http.get(issueUrl, httpOptions).pipe(Object(__WEBPACK_IMPORTED_MODULE_5_rxjs_operators__["map"])(function (issue) {
+        return this.http.get(issueUrl, httpOptions).pipe(Object(__WEBPACK_IMPORTED_MODULE_2_rxjs_operators__["map"])(function (issue) {
             console.log(issue);
             return issue;
         }));
@@ -1261,7 +1261,7 @@ var IssueProvider = (function () {
         });
     };
     IssueProvider.prototype.startExternalMap = function (latitude, longitude) {
-        var launchNavigator = new __WEBPACK_IMPORTED_MODULE_3__ionic_native_launch_navigator__["a" /* LaunchNavigator */]();
+        var launchNavigator = new __WEBPACK_IMPORTED_MODULE_4__ionic_native_launch_navigator__["a" /* LaunchNavigator */]();
         var options = {
             destinationName: name,
             transportMode: "driving",
@@ -1269,7 +1269,7 @@ var IssueProvider = (function () {
         launchNavigator.navigate([latitude, longitude], options).then(function (success) { return console.log('Launched navigator'); }, function (error) { return console.log('Error launching navigator', error); });
     };
     IssueProvider.prototype.getIssueTypes = function (page, pageSize) {
-        var issueTypesUrl = __WEBPACK_IMPORTED_MODULE_4__app_config__["a" /* config */].apiUrl + "/issueTypes";
+        var issueTypesUrl = __WEBPACK_IMPORTED_MODULE_5__app_config__["a" /* config */].apiUrl + "/issueTypes";
         //Create new HttpParams
         var params = new __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["d" /* HttpParams */]();
         params = page ? params.append('page', page.toString()) : params;
@@ -1277,35 +1277,35 @@ var IssueProvider = (function () {
         var httpOptions = {
             params: params,
         };
-        return this.http.get(issueTypesUrl, httpOptions).pipe(Object(__WEBPACK_IMPORTED_MODULE_5_rxjs_operators__["map"])(function (issueTypes) {
+        return this.http.get(issueTypesUrl, httpOptions).pipe(Object(__WEBPACK_IMPORTED_MODULE_2_rxjs_operators__["map"])(function (issueTypes) {
             console.log(issueTypes);
             return issueTypes;
         }));
     };
     IssueProvider.prototype.createIssue = function (newIssue) {
-        var newIssueUrl = __WEBPACK_IMPORTED_MODULE_4__app_config__["a" /* config */].apiUrl + "/issues";
-        return this.http.post(newIssueUrl, newIssue).pipe(Object(__WEBPACK_IMPORTED_MODULE_5_rxjs_operators__["map"])(function (issue) {
+        var newIssueUrl = __WEBPACK_IMPORTED_MODULE_5__app_config__["a" /* config */].apiUrl + "/issues";
+        return this.http.post(newIssueUrl, newIssue).pipe(Object(__WEBPACK_IMPORTED_MODULE_2_rxjs_operators__["map"])(function (issue) {
             console.log(issue);
             return issue;
         }));
     };
     IssueProvider.prototype.getIssueCommentsById = function (id) {
-        var issueCommentsUrl = __WEBPACK_IMPORTED_MODULE_4__app_config__["a" /* config */].apiUrl + "/issues/" + id + "/comments?include=author";
-        return this.http.get(issueCommentsUrl).pipe(Object(__WEBPACK_IMPORTED_MODULE_5_rxjs_operators__["map"])(function (issueComments) {
+        var issueCommentsUrl = __WEBPACK_IMPORTED_MODULE_5__app_config__["a" /* config */].apiUrl + "/issues/" + id + "/comments?include=author";
+        return this.http.get(issueCommentsUrl).pipe(Object(__WEBPACK_IMPORTED_MODULE_2_rxjs_operators__["map"])(function (issueComments) {
             console.log(issueComments);
             return issueComments;
         }));
     };
     IssueProvider.prototype.createIssueComment = function (issueId, newComment) {
-        var newIssueCommentUrl = __WEBPACK_IMPORTED_MODULE_4__app_config__["a" /* config */].apiUrl + "/issues/" + issueId + "/comments";
-        return this.http.post(newIssueCommentUrl, newComment).pipe(Object(__WEBPACK_IMPORTED_MODULE_5_rxjs_operators__["map"])(function (comment) {
+        var newIssueCommentUrl = __WEBPACK_IMPORTED_MODULE_5__app_config__["a" /* config */].apiUrl + "/issues/" + issueId + "/comments";
+        return this.http.post(newIssueCommentUrl, newComment).pipe(Object(__WEBPACK_IMPORTED_MODULE_2_rxjs_operators__["map"])(function (comment) {
             console.log(comment);
             return comment;
         }));
     };
     IssueProvider.prototype.addIssueAction = function (issueId, issueAction) {
-        var editIssueUrl = __WEBPACK_IMPORTED_MODULE_4__app_config__["a" /* config */].apiUrl + "/issues/" + issueId + "/actions";
-        return this.http.post(editIssueUrl, issueAction).pipe(Object(__WEBPACK_IMPORTED_MODULE_5_rxjs_operators__["map"])(function (issue) {
+        var editIssueUrl = __WEBPACK_IMPORTED_MODULE_5__app_config__["a" /* config */].apiUrl + "/issues/" + issueId + "/actions";
+        return this.http.post(editIssueUrl, issueAction).pipe(Object(__WEBPACK_IMPORTED_MODULE_2_rxjs_operators__["map"])(function (issue) {
             console.log(issue);
             return issue;
         }));
@@ -1313,7 +1313,7 @@ var IssueProvider = (function () {
     IssueProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["b" /* HttpClient */],
-            __WEBPACK_IMPORTED_MODULE_2__ionic_native_native_geocoder__["a" /* NativeGeocoder */]])
+            __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_geocoder__["a" /* NativeGeocoder */]])
     ], IssueProvider);
     return IssueProvider;
 }());

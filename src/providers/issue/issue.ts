@@ -1,12 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 
 import { config } from '../../app/config';
 import { Issue } from '../../models/issue';
-import { map } from 'rxjs/operators';
 import { NewIssue } from '../../models/new-issue';
 import { IssueType } from '../../models/issue-type';
 import { IssueComment } from '../../models/issue-comment';
