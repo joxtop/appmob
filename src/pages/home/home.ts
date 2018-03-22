@@ -32,18 +32,18 @@ export class HomePage {
     public navParams: NavParams,
     public storage: Storage
   ) {
-    // If the tuto is not yet done, redirect the user to the tuto page
-    this.storage.get('tuto-done').then(done => {
-      if (!done) {
-        this.navCtrl.setRoot(TutoPage);
-      }
-    });
-
-    // set the root page
-    this.rootPage = IssueMapPage;
-
     this.auth.getUser().subscribe((user) => {
       this.profile = user;
+
+      // If the tuto is not yet done, redirect the user to the tuto page
+      this.storage.get('tuto-done').then(done => {
+        if (!done) {
+          this.navCtrl.setRoot(TutoPage, { user: this.profile });
+        }
+      });
+
+      // set the root page
+      this.rootPage = IssueMapPage;
 
       // set our app's pages
       this.pages = [

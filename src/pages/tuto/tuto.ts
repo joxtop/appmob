@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import { HomePage } from '../home/home';
+import { User } from '../../models/user';
 
 /**
  * Generated class for the TutoPage page.
@@ -17,11 +18,15 @@ import { HomePage } from '../home/home';
 })
 export class TutoPage {
 
+  profile: User;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public storage: Storage
-  ) {}
+  ) {
+    this.profile = this.navParams.data.user;
+  }
 
   navHome() {
     this.storage.set('tuto-done', true);

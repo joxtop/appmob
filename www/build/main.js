@@ -37,16 +37,16 @@ var HomePage = (function () {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.storage = storage;
-        // If the tuto is not yet done, redirect the user to the tuto page
-        this.storage.get('tuto-done').then(function (done) {
-            if (!done) {
-                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__tuto_tuto__["a" /* TutoPage */]);
-            }
-        });
-        // set the root page
-        this.rootPage = __WEBPACK_IMPORTED_MODULE_6__issue_map_issue_map__["a" /* IssueMapPage */];
         this.auth.getUser().subscribe(function (user) {
             _this.profile = user;
+            // If the tuto is not yet done, redirect the user to the tuto page
+            _this.storage.get('tuto-done').then(function (done) {
+                if (!done) {
+                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__tuto_tuto__["a" /* TutoPage */], { user: _this.profile });
+                }
+            });
+            // set the root page
+            _this.rootPage = __WEBPACK_IMPORTED_MODULE_6__issue_map_issue_map__["a" /* IssueMapPage */];
             // set our app's pages
             _this.pages = [
                 { title: 'Mon profile', component: __WEBPACK_IMPORTED_MODULE_4__profile_profile__["a" /* ProfilePage */], user: _this.profile },
@@ -802,6 +802,7 @@ var TutoPage = (function () {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.storage = storage;
+        this.profile = this.navParams.data.user;
     }
     TutoPage.prototype.navHome = function () {
         this.storage.set('tuto-done', true);
@@ -809,7 +810,7 @@ var TutoPage = (function () {
     };
     TutoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-tuto',template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\tuto\tuto.html"*/'<!--\n\n  Generated template for the TutoPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Comment utiliser l\'application</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n  <ion-slides pager="true" parallax="true" padding>\n\n    <ion-slide>\n\n      <img src="assets/tuto/youhere.svg" class="slide-image">\n\n      <h1>Welcome to\n\n        <br/> Citizen Engagement\n\n      </h1>\n\n      <img src="assets/tuto/search-problem.svg" class="slide-image">\n\n      <p>Votre application pour reporter les anomalies de votre ville</p>\n\n    </ion-slide>\n\n\n\n    <ion-slide id="map">\n\n        <img src="assets/tuto/map.png" class="slide-image"/>\n\n        <ion-title class="slide-title" > Naviguez sur la carte </ion-title>\n\n        <p>Naviguez sur la carte et regardez les issues qui sont dans votre région et <b>reportez un problème</b> ou vous êtes</p>\n\n\n\n    </ion-slide>\n\n\n\n    <ion-slide>\n\n\n\n        <img src="assets/tuto/issue.png" class="slide-image"/>\n\n        <ion-title class="slide-title" > Reportez un problème </ion-title>\n\n        <p>Remplisez au moins <b> le type et la description</b> de votre problème</p>\n\n\n\n    </ion-slide>\n\n\n\n    <ion-slide>\n\n        <img src="assets/tuto/liste.png" class="slide-image"/>\n\n        <ion-title class="slide-title" > Commentez les problèmes </ion-title>\n\n        <p></p>\n\n\n\n      <button ion-button outline small (click)="navHome()">\n\n        Commencer à utiliser l\'app\n\n      </button>\n\n    \n\n    </ion-slide>\n\n\n\n  </ion-slides>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\tuto\tuto.html"*/,
+            selector: 'page-tuto',template:/*ion-inline-start:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\tuto\tuto.html"*/'<!--\n\n  Generated template for the TutoPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Comment utiliser l\'application</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content>\n\n  <ion-slides pager="true" parallax="true" padding>\n\n    <ion-slide>\n\n      <img src="assets/tuto/youhere.svg" class="slide-image">\n\n      <h1>Welcome to\n\n        <br/> Citizen Engagement\n\n      </h1>\n\n      <img src="assets/tuto/search-problem.svg" class="slide-image">\n\n      <p>Votre application pour reporter les anomalies de votre ville</p>\n\n    </ion-slide>\n\n\n\n    <ion-slide id="map">\n\n        <img src="assets/tuto/map.png" class="slide-image"/>\n\n        <ion-title class="slide-title" > Naviguez sur la carte </ion-title>\n\n        <p>Naviguez sur la carte et regardez les issues qui sont dans votre région et <b>reportez un problème</b> ou vous êtes</p>\n\n\n\n    </ion-slide>\n\n\n\n    <ion-slide id="map">\n\n      <img src="assets/tuto/filter-issue.png" class="slide-image"/>\n\n      <ion-title class="slide-title" > Filtrer les problèmes </ion-title>\n\n      <p><b>Recherchez un problème</b> spécifique depuis la liste des problèmes</p>\n\n\n\n  </ion-slide>\n\n\n\n    <ion-slide>\n\n\n\n        <img src="assets/tuto/issue.png" class="slide-image"/>\n\n        <ion-title class="slide-title" > Reportez un problème </ion-title>\n\n        <p>Remplisez au moins <b> le type et la description</b> de votre problème</p>\n\n\n\n    </ion-slide>\n\n\n\n    <ion-slide *ngIf="profile?.roles.includes(\'staff\')">\n\n\n\n      <img src="assets/tuto/issue-edit.png" class="slide-image"/>\n\n      <ion-title class="slide-title" > Editez un problème </ion-title>\n\n      <p>En tant qu\'admin, vous pouvez <b>changer le status des problèmes</b></p>\n\n\n\n    </ion-slide>\n\n\n\n    <ion-slide>\n\n        <img src="assets/tuto/liste.png" class="slide-image"/>\n\n        <ion-title class="slide-title" > Commentez les problèmes </ion-title>\n\n        <p></p>\n\n\n\n      <button ion-button outline small (click)="navHome()">\n\n        Commencer à utiliser l\'app\n\n      </button>\n\n    \n\n    </ion-slide>\n\n\n\n  </ion-slides>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Florian\Ecole\HEIG-VD\AppMob\citizen-engagement-app\src\pages\tuto\tuto.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],

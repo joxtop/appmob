@@ -31,11 +31,26 @@
 
     </ion-slide>
 
+    <ion-slide id="map">
+      <img src="assets/tuto/filter-issue.png" class="slide-image"/>
+      <ion-title class="slide-title" > Filtrer les problèmes </ion-title>
+      <p><b>Recherchez un problème</b> spécifique depuis la liste des problèmes</p>
+
+  </ion-slide>
+
     <ion-slide>
 
         <img src="assets/tuto/issue.png" class="slide-image"/>
         <ion-title class="slide-title" > Reportez un problème </ion-title>
         <p>Remplisez au moins <b> le type et la description</b> de votre problème</p>
+
+    </ion-slide>
+
+    <ion-slide *ngIf="profile?.roles.includes('staff')">
+
+      <img src="assets/tuto/issue-edit.png" class="slide-image"/>
+      <ion-title class="slide-title" > Editez un problème </ion-title>
+      <p>En tant qu'admin, vous pouvez <b>changer le status des problèmes</b></p>
 
     </ion-slide>
 
